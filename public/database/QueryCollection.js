@@ -1,14 +1,8 @@
-class Query {
+class QueryCollection {
   constructor(db, path) {
     this.db = db;
     this.path = path;
     this.whereClauses = [];
-  }
-
-  path(path) {
-    this.path = path;
-
-    return this;
   }
 
   where(field, operater, value) {
@@ -35,4 +29,4 @@ class Query {
   }
 }
 
-export default Query;
+export default QueryCollection;

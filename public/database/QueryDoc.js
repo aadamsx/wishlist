@@ -10,7 +10,10 @@ class QueryDoc {
 
     const snapshot = await query.doc(this.docId).get();
 
-    return snapshot.data();
+    return {
+      ...snapshot.data(),
+      id: this.docId,
+    };
   }
 }
 

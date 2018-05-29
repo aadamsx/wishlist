@@ -7,7 +7,7 @@ class UserService {
 
   async getAllUsers() {
     return database
-      .query(this.path)
+      .queryCollection(this.path)
       .execute();
   }
 

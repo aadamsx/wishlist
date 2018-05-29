@@ -5,9 +5,16 @@ class ItemService {
     this.path = 'items';
   }
 
+  async addItem(item) {
+    return database
+      .create(this.path)
+      .withValue(item)
+      .execute();
+  }
+
   async getItems(userId) {
     return database
-      .query(this.path)
+      .queryCollection(this.path)
       .where('userId', '==', userId)
       .execute();
   }

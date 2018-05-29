@@ -1,6 +1,7 @@
 import 'firebase/firestore';
+import CreateDoc from './CreateDoc';
 import firebase from 'firebase/app';
-import Query from './Query';
+import QueryCollection from './QueryCollection';
 import QueryDoc from './QueryDoc';
 
 const firebaseSettings = {
@@ -24,12 +25,12 @@ class Database {
     this._db = firebase.firestore();
   }
 
-  create() {
-    throw new Error('Not Implemented');
+  create(path) {
+    return new CreateDoc(this._db, path);
   }
 
-  query(path) {
-    return new Query(this._db, path);
+  queryCollection(path) {
+    return new QueryCollection(this._db, path);
   }
 
   queryDoc(path, docId) {

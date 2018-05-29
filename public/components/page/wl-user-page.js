@@ -1,3 +1,4 @@
+import '../add-item/wl-add-item';
 import '../item-list/wl-item-list';
 import { connect } from 'pwa-helpers/connect-mixin';
 import { html, LitElement } from '@polymer/lit-element';
@@ -24,6 +25,7 @@ class WLUserPage extends connect(store)(LitElement) {
       <p>${_currentUser.username}</p>
 
       <wl-item-list items=${_items}></wl-item-list>
+      <wl-add-item></wl-add-item>
     `;
   }
 

@@ -1,4 +1,4 @@
-import { CLEAR_ITEMS, SET_ITEMS } from '../actions/itemList';
+import { ADD_ITEM, CLEAR_ITEMS, SET_ITEMS } from '../actions/itemList';
 
 const INITIAL_STATE = {};
 

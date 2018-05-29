@@ -14,11 +14,7 @@ class WLItemList extends LitElement {
     const itemList = repeat(
       Object.entries(items),
       ([k]) => k,
-      ([k, v]) => html`
-        <li>
-          ${v.name}
-        </li>
-      `,
+      ([, v]) => html`<li>${v.title}</li>`,
     );
 
     return html`

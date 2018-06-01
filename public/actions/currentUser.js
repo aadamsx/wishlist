@@ -1,15 +1,17 @@
 import userService from '../services/userService';
 
+/* --------------------- */
+/* -- Reducer Actions -- */
+/* --------------------- */
 const CLEAR_CURRENT_USER = 'CLEAR_CURRENT_USER';
 const SET_CURRENT_USER = 'SET_CURRENT_USER';
 
 const clearCurrentUser = () => ({ type: CLEAR_CURRENT_USER });
+const setCurrentUser = currentUser => ({ currentUser, type: SET_CURRENT_USER });
 
-const setCurrentUser = currentUser => ({
-  type: SET_CURRENT_USER,
-  currentUser,
-});
-
+/* ----------------- */
+/* -- API Actions -- */
+/* ----------------- */
 const loadCurrentUser = userId => async (dispatch, getState) => {
   const { currentUser } = getState();
 
@@ -27,12 +29,8 @@ const loadCurrentUser = userId => async (dispatch, getState) => {
 };
 
 export {
-  clearCurrentUser,
-  loadCurrentUser,
-  setCurrentUser,
-};
-
-export {
   CLEAR_CURRENT_USER,
   SET_CURRENT_USER,
 };
+
+export { loadCurrentUser };

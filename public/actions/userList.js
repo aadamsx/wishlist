@@ -1,13 +1,15 @@
 import userService from '../services/userService';
 
-const LOAD_USERS = 'LOAD_USERS';
+/* --------------------- */
+/* -- Reducer Actions -- */
+/* --------------------- */
 const SET_USERS = 'SET_USERS';
 
-const setUsers = userList => ({
-  type: SET_USERS,
-  userList,
-});
+const setUsers = userList => ({ type: SET_USERS, userList });
 
+/* ----------------- */
+/* -- API Actions -- */
+/* ----------------- */
 const loadUsers = () => async (dispatch) => {
   try {
     const userList = await userService.getAllUsers();
@@ -18,12 +20,6 @@ const loadUsers = () => async (dispatch) => {
   }
 };
 
-export {
-  loadUsers,
-  setUsers,
-};
+export { SET_USERS };
 
-export {
-  LOAD_USERS,
-  SET_USERS,
-};
+export { loadUsers };

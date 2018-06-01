@@ -1,17 +1,19 @@
 import itemService from '../services/itemService';
 
-const ADD_ITEM = 'ADD_ITEM';
+/* --------------------- */
+/* -- Reducer Actions -- */
+/* --------------------- */
 const CLEAR_ITEMS = 'CLEAR_ITEMS';
-const LOAD_ITEMS = 'LOAD_ITEMS';
+const REMOVE_ITEM = 'REMOVE_ITEM';
 const SET_ITEMS = 'SET_ITEMS';
 
 const clearItems = () => ({ type: CLEAR_ITEMS });
+const removeItem = id => ({ id, type: REMOVE_ITEM });
+const setItems = itemList => ({ itemList, type: SET_ITEMS });
 
-const setItems = itemList => ({
-  type: SET_ITEMS,
-  itemList,
-});
-
+/* ----------------- */
+/* -- API Actions -- */
+/* ----------------- */
 const addItem = title => async (dispatch, getState) => {
   const { currentUser, itemList } = getState();
 
@@ -24,6 +26,16 @@ const addItem = title => async (dispatch, getState) => {
     itemList[item.id] = item;
 
     dispatch(setItems(itemList));
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+const deleteItem = id => async (dispatch) => {
+  try {
+    await itemService.deleteItem(id);
+
+    dispatch(removeItem(id));
   } catch (e) {
     console.error(e);
   }
@@ -42,14 +54,13 @@ const loadItems = userId => async (dispatch) => {
 };
 
 export {
-  addItem,
-  loadItems,
-  setItems,
+  CLEAR_ITEMS,
+  REMOVE_ITEM,
+  SET_ITEMS,
 };
 
 export {
-  ADD_ITEM,
-  CLEAR_ITEMS,
-  LOAD_ITEMS,
-  SET_ITEMS,
+  addItem,
+  deleteItem,
+  loadItems,
 };

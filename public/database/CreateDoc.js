@@ -16,9 +16,9 @@ class CreateDoc {
       throw new Error('Value to create not set. Please call `withValue()` before executing');
     }
 
-    const query = this.db.collection(this.path);
+    const colRef = this.db.collection(this.path);
 
-    const docRef = await query.add(this.value);
+    const docRef = await colRef.add(this.value);
 
     return {
       ...this.value,

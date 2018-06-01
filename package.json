@@ -4,11 +4,11 @@
   "author": "Craig Jennings <craig.jennings11@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "npm-run-all -p serve webpack:watch",
-    "serve": "live-server dist/ --entry-file=index.html",
-    "webpack:dev": "webpack --mode development --reporter basic",
-    "webpack:prod": "webpack --mode production",
-    "webpack:watch": "npm run webpack:dev -- --watch"
+    "build:dev": "webpack --mode development",
+    "build:prod": "webpack --mode production",
+    "build:watch": "webpack --mode development --watch",
+    "dev": "npm-run-all -p serve build:watch",
+    "serve": "live-server dist/ --entry-file=index.html"
   },
   "dependencies": {
     "@polymer/lit-element": "0.5.1",

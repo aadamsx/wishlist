@@ -1,4 +1,4 @@
-class QueryDoc {
+class DeleteDoc {
   constructor(db, path, docId) {
     this.db = db;
     this.path = path;
@@ -8,13 +8,8 @@ class QueryDoc {
   async execute() {
     const docRef = this.db.collection(this.path).doc(this.docId);
 
-    const snapshot = await docRef.get();
-
-    return {
-      ...snapshot.data(),
-      id: this.docId,
-    };
+    await docRef.delete();
   }
 }
 
-export default QueryDoc;
+export default DeleteDoc;

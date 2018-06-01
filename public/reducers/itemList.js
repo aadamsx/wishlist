@@ -1,9 +1,18 @@
-import { ADD_ITEM, CLEAR_ITEMS, SET_ITEMS } from '../actions/itemList';
+import { CLEAR_ITEMS, REMOVE_ITEM, SET_ITEMS } from '../actions/itemList';
 
 const INITIAL_STATE = {};
 
 const reducers = {
   [CLEAR_ITEMS]: () => ({}),
+
+  [REMOVE_ITEM]: (state, { id }) => {
+    const itemList = Object.assign({}, state);
+
+    delete itemList[id];
+
+    return itemList;
+  },
+
   [SET_ITEMS]: (state, { itemList }) => Object.assign({}, itemList),
 };
 

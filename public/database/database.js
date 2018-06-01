@@ -1,5 +1,6 @@
 import 'firebase/firestore';
 import CreateDoc from './CreateDoc';
+import DeleteDoc from './DeleteDoc';
 import firebase from 'firebase/app';
 import QueryCollection from './QueryCollection';
 import QueryDoc from './QueryDoc';
@@ -29,6 +30,10 @@ class Database {
     return new CreateDoc(this._db, path);
   }
 
+  deleteDoc(path, docId) {
+    return new DeleteDoc(this._db, path, docId);
+  }
+
   queryCollection(path) {
     return new QueryCollection(this._db, path);
   }
@@ -38,10 +43,6 @@ class Database {
   }
 
   update() {
-    throw new Error('Not Implemented');
-  }
-
-  delete() {
     throw new Error('Not Implemented');
   }
 }

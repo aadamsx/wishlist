@@ -12,6 +12,12 @@ class ItemService {
       .execute();
   }
 
+  async deleteItem(id) {
+    return database
+      .deleteDoc(this.path, id)
+      .execute();
+  }
+
   async getItems(userId) {
     return database
       .queryCollection(this.path)

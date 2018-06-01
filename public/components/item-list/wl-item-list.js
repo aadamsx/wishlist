@@ -1,3 +1,4 @@
+import './wl-item-list-item';
 import { html, LitElement } from '@polymer/lit-element';
 import { repeat } from 'lit-html/lib/repeat';
 
@@ -14,7 +15,7 @@ class WLItemList extends LitElement {
     const itemList = repeat(
       Object.entries(items),
       ([k]) => k,
-      ([, v]) => html`<li>${v.title}</li>`,
+      ([k, v]) => html`<wl-item-list-item id=${k} name=${v.title}></wl-item-list-item>`,
     );
 
     return html`

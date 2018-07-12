@@ -4,3 +4,5 @@ dist/
 node_modules/
 
 # Files
+firebase-debug.log
+yarn-debug.log

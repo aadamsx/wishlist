@@ -1,40 +1,15 @@
 {
-  "name": "wishlist",
-  "version": "0.1.0",
-  "author": "Craig Jennings <craig.jennings11@gmail.com>",
-  "license": "MIT",
+  "workspaces": ["app"],
+  "private": true,
   "scripts": {
-    "build:dev": "webpack --mode development",
-    "build:prod": "webpack --mode production",
-    "build:watch": "webpack --mode development --watch",
-    "dev": "npm-run-all -p serve build:watch",
-    "serve": "live-server dist/ --entry-file=index.html",
+    "deploy": "npm-run-all -s deploy:*",
+    "deploy:app": "yarn workspace app deploy",
+    "start": "npm-run-all -p start:*",
+    "start:app": "yarn workspace app start",
     "test": "npm-run-all test:*",
-    "test:eslint": "eslint public/ --quiet",
-    "test:jest": "jest"
-  },
-  "dependencies": {
-    "@polymer/lit-element": "0.5.2",
-    "firebase": "5.0.4",
-    "page": "1.8.6",
-    "pwa-helpers": "0.8.2",
-    "redux": "4.0.0",
-    "redux-thunk": "2.3.0"
+    "test:app": "yarn workspace app test"
   },
   "devDependencies": {
-    "babel-core": "^6.26.3",
-    "babel-jest": "^23.0.1",
-    "babel-preset-env": "^1.7.0",
-    "deep-freeze": "^0.0.1",
-    "eslint": "^4.19.1",
-    "eslint-config-airbnb-base": "^12.1.0",
-    "eslint-plugin-import": "^2.12.0",
-    "eslint-plugin-sort-imports-es6-autofix": "^0.3.0",
-    "html-webpack-plugin": "^3.2.0",
-    "jest": "^23.1.0",
-    "live-server": "^1.2.0",
-    "npm-run-all": "^4.1.3",
-    "webpack": "^4.8.3",
-    "webpack-command": "^0.2.0"
+    "npm-run-all": "^4.1.3"
   }
 }

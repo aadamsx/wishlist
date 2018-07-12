@@ -1,0 +1,17 @@
+{
+  "hosting": {
+    "cleanUrls": true,
+    "predeploy": [
+      "yarn workspace app test",
+      "yarn workspace app build:prod"
+    ],
+    "public": "./app/dist",
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ],
+    "trailingSlash": false
+  }
+}

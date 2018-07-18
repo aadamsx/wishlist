@@ -2,10 +2,10 @@ import './components/item-list/wl-item-list.js';
 import './components/layout/wl-double-pane.js';
 import './components/layout/wl-single-pane.js';
 import './components/login/wl-login.js';
-import { html } from '@polymer/lit-element';
-// import { loadCurrentUser } from './actions/currentUser.js';
+import './components/user-list/wl-user-list.js';
 import { clearItemList, loadItemList } from './actions/itemList.js';
 import { clearUserList, loadUserList } from './actions/userList.js';
+import { html } from '@polymer/lit-element';
 import { setPage } from './actions/router.js';
 import store from './store.js';
 

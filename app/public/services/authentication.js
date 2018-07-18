@@ -1,4 +1,6 @@
+import { setLoginStatus } from '../actions/loginStatus.js';
 import firebase from '../database/firebase.js';
+import store from '../store.js';
 
 class Authentication {
   constructor() {
@@ -12,10 +14,20 @@ class Authentication {
         this._routerStarted = true;
 
         router.start();
-      } else if (!this._auth.currentUser) {
-        router('/login');
-      } else {
+
+        store.dispatch(setLoginStatus(!!this._auth.currentUser));
+
+        return;
+      }
+
+      if (this._auth.currentUser) {
+        store.dispatch(setLoginStatus(true));
+
         router('/');
+      } else {
+        store.dispatch(setLoginStatus(false));
+
+        router('/login');
       }
     });
   }

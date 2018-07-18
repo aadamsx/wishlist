@@ -1,8 +1,16 @@
+import { connect } from 'pwa-helpers/connect-mixin.js';
 import { html, LitElement } from '@polymer/lit-element';
 import authentication from '../../services/authentication.js';
+import store from '../../store.js';
 
-class WLHeader extends LitElement {
+class WLHeader extends connect(store)(LitElement) {
   static get is() { return 'wl-header'; }
+
+  static get properties() {
+    return {
+      _isLoggedIn: Boolean,
+    };
+  }
 
   static get styles() {
     return html`
@@ -28,12 +36,18 @@ class WLHeader extends LitElement {
     `;
   }
 
-  _render() {
+  constructor() {
+    super();
+
+    this._isLoggedIn = false;
+  }
+
+  _render({ _isLoggedIn }) {
     return html`
       ${WLHeader.styles}
 
       <a href="">Wishlist</a>
-      <a href="logout" on-click=${e => this.logoutHandler(e)}>Logout</a>
+      ${_isLoggedIn ? html`<a href="logout" on-click=${e => this.logoutHandler(e)}>Logout</a>` : html``}
     `;
   }
 
@@ -41,6 +55,10 @@ class WLHeader extends LitElement {
     e.preventDefault();
 
     authentication.logOut();
+  }
+
+  _stateChanged(state) {
+    this._isLoggedIn = state.loginStatus;
   }
 }
 

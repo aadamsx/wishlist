@@ -1,5 +1,5 @@
+import '../layout/wl-app-layout.js';
 import '../layout/wl-header.js';
-import '../user-list/wl-user-list.js';
 import { connect } from 'pwa-helpers/connect-mixin.js';
 import { html, LitElement } from '@polymer/lit-element';
 import store from '../../store.js';
@@ -28,8 +28,10 @@ class WLMainApp extends connect(store)(LitElement) {
     return html`
       ${WLMainApp.styles}
 
-      <wl-header></wl-header>
-      ${_page}
+      <wl-app-layout>
+        <wl-header></wl-header>
+        ${_page}
+      </wl-app-layout>
     `;
   }
 

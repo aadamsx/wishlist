@@ -8,8 +8,9 @@ class WLDoublePane extends LitElement {
       <style>
         :host {
           display: grid;
-          grid-template-columns: 1fr minmax(300px, 1fr) minmax(500px, 2fr) 1fr;
           grid-template-areas: ". left-pane main-pane .";
+          grid-template-columns: 1fr minmax(300px, 1fr) minmax(500px, 2fr) 1fr;
+          overflow: auto;
         }
 
         .left-pane {

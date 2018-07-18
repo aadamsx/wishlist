@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@polymer/lit-element": "0.5.2",
+    "classnames": "2.2.6",
     "firebase": "5.2.0",
     "lit-html": "0.10.2",
     "page": "1.8.6",

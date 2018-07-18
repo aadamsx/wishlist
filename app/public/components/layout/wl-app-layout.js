@@ -7,12 +7,9 @@ class WLAppLayout extends LitElement {
     return html`
       <style>
         :host {
-          display: block;
-        }
-
-        .grid {
           display: grid;
-          grid-template-rows: 56px calc(100vh - 56px);
+          gap: 1rem;
+          grid-template-rows: 56px calc(100vh - 56px - 1rem);
         }
       </style>
     `;
@@ -21,10 +18,7 @@ class WLAppLayout extends LitElement {
   _render() {
     return html`
       ${WLAppLayout.styles}
-
-      <div class="grid">
-        <slot></slot>
-      </div>
+      <slot></slot>
     `;
   }
 }

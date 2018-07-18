@@ -43,11 +43,19 @@ class WLHeader extends connect(store)(LitElement) {
   }
 
   _render({ _isLoggedIn }) {
+    const logoutEl = _isLoggedIn
+      ? html`
+        <small>
+          <a href="logout" on-click=${e => this.logoutHandler(e)}>Logout</a>
+        </small>
+      `
+      : html``;
+
     return html`
       ${WLHeader.styles}
 
       <a href="">Wishlist</a>
-      ${_isLoggedIn ? html`<a href="logout" on-click=${e => this.logoutHandler(e)}>Logout</a>` : html``}
+      ${logoutEl}
     `;
   }
 

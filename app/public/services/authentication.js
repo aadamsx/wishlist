@@ -1,4 +1,4 @@
-import { setLoginStatus } from '../actions/loginStatus.js';
+import { clearCurrentUser, setCurrentUser } from '../actions/currentUser.js';
 import firebase from '../database/firebase.js';
 import store from '../store.js';
 
@@ -15,17 +15,21 @@ class Authentication {
 
         router.start();
 
-        store.dispatch(setLoginStatus(!!this._auth.currentUser));
+        if (this._auth.currentUser) {
+          store.dispatch(setCurrentUser(this._auth.currentUser));
+        } else {
+          store.dispatch(clearCurrentUser());
+        }
 
         return;
       }
 
       if (this._auth.currentUser) {
-        store.dispatch(setLoginStatus(true));
+        store.dispatch(setCurrentUser(this._auth.currentUser));
 
         router('/');
       } else {
-        store.dispatch(setLoginStatus(false));
+        store.dispatch(clearCurrentUser());
 
         router('/login');
       }

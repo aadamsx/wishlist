@@ -4,11 +4,14 @@ const INITIAL_STATE = {};
 
 const reducers = {
   [CLEAR_CURRENT_USER]: () => ({}),
-  [SET_CURRENT_USER]: (state, { currentUser }) => Object.assign({}, currentUser),
+  [SET_CURRENT_USER]: (state, { currentUser }) => ({
+    id: currentUser.uid,
+    name: currentUser.displayName,
+  }),
 };
 
-const currentUserReducer = (state = INITIAL_STATE, action) => (
+const userReducer = (state = INITIAL_STATE, action) => (
   reducers[action.type] ? reducers[action.type](state, action) : state
 );
 
-export default currentUserReducer;
+export default userReducer;

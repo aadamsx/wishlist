@@ -15,12 +15,12 @@ const setItems = itemList => ({ itemList, type: SET_ITEMS });
 /* -- API Actions -- */
 /* ----------------- */
 const addItem = title => async (dispatch, getState) => {
-  const { currentUser, itemList } = getState();
+  const { itemList, user } = getState();
 
   try {
     const item = await itemService.addItem({
       title,
-      userId: currentUser.id,
+      userId: user.id,
     });
 
     itemList[item.id] = item;

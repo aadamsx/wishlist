@@ -1,6 +1,6 @@
 import { CLEAR_CURRENT_USER, SET_CURRENT_USER } from '../../public/actions/currentUser.js';
 import deepFreeze from 'deep-freeze';
-import reducer from '../../public/reducers/currentUser.js';
+import reducer from '../../public/reducers/user.js';
 
 test('Returns state when no action matches', () => {
   const currentState = { x: 1 };
@@ -24,7 +24,7 @@ test('SET_CURRENT_USER', () => {
   const expectedState = deepFreeze({ y: 2 });
 
   const newState = reducer(currentState, {
-    currentUser: expectedState,
+    user: expectedState,
     type: SET_CURRENT_USER,
   });
 

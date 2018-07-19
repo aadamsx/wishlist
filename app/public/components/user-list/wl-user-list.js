@@ -16,18 +16,17 @@ class WLUserList extends connect(store)(LitElement) {
   static get styles() {
     return html`
       <style>
+        * {
+          box-sizing: border-box;
+        }
+
         :host {
-          display: flex;
-          flex-direction: column;
+          display: block;
         }
 
         .container {
           border-radius: 4px;
           border: 1px solid #dddddd;
-        }
-
-        .container:empty {
-          border-color: transparent;
         }
 
         .user {
@@ -39,31 +38,42 @@ class WLUserList extends connect(store)(LitElement) {
           text-decoration: none;
         }
 
+        .user:focus,
         .user:hover {
           background-color: #dddddd;
+          outline: none;
         }
 
         .active {
           background-color: #b2dfdb;
         }
 
+        .active:focus,
         .active:hover {
           background-color: #b2dfdb;
+          outline: none;
         }
 
         .search {
-          /* border-bottom: 1px solid #dddddd; */
           display: flex;
           padding: .5rem;
         }
 
         .search input {
-          border: 1px solid #aaaaaa;
-          border-radius: 2px;
-          line-height: 1.5rem;
+          border-bottom: 1px solid #aaaaaa;
+          border-left: 1px solid transparent;
+          border-right: 1px solid transparent;
+          border-top: 1px solid transparent;
+          line-height: 1.75rem;
           font-size: 14px;
+          outline: none;
           width: 100%;
           padding-left: .25rem;
+        }
+
+        .search input:focus {
+          border: 1px solid var(--primary-color);
+          border-radius: 2px;
         }
       </style>
     `;
@@ -72,6 +82,8 @@ class WLUserList extends connect(store)(LitElement) {
   constructor() {
     super();
 
+    this.__allUsers = {};
+    this.__selectedUser = null;
     this._userList = {};
   }
 
@@ -81,7 +93,7 @@ class WLUserList extends connect(store)(LitElement) {
       ([k]) => k,
       ([k, v]) => {
         const classes = classNames('user', {
-          active: k === 'QuDhG60jrsUbBDOj3Vuo',
+          active: k === this.__selectedUser,
         });
 
         return html`
@@ -93,9 +105,9 @@ class WLUserList extends connect(store)(LitElement) {
     return html`
       ${WLUserList.styles}
 
-      <div class="container">
-        <div class="search">
-          <input id="search" placeholder="Search..." type="text" on-keyup=${e => this.handleSearch(e)}>
+      <div class="container" on-keydown=${e => this.keyDownHandler(e)}>
+        <div class="search" tabindex="-1" on-focus=${() => this._root.getElementById('search').focus()}>
+          <input id="search" placeholder="Search..." type="text" on-keyup=${e => this.searchHandler(e)}>
         </div>
 
         ${userList}
@@ -105,6 +117,7 @@ class WLUserList extends connect(store)(LitElement) {
 
   _stateChanged(state = {}) {
     this.__allUsers = state.userList;
+    this.__selectedUser = state.selectedUser.id;
 
     if (this._root) {
       const searchEl = this._root.getElementById('search');
@@ -131,10 +144,38 @@ class WLUserList extends connect(store)(LitElement) {
     }, {});
   }
 
-  handleSearch(e) {
+  keyDownHandler(e) {
+    switch (e.keyCode) {
+      case 38: // Up arrow
+        if (!e.target.previousElementSibling) return;
+
+        e.target.previousElementSibling.focus();
+
+        break;
+      case 40: // Down arrow
+        if (!e.target.nextElementSibling) break;
+
+        e.target.nextElementSibling.focus();
+
+        break;
+
+      default:
+    }
+  }
+
+  searchHandler(e) {
     e.preventDefault();
 
-    this._filterUsers(e.target.value);
+    switch (e.keyCode) {
+      case 40: // Down arrow
+        // Focus the first user
+        this._root.querySelector('a').focus();
+
+        break;
+
+      default:
+        this._filterUsers(e.target.value);
+    }
   }
 }
 

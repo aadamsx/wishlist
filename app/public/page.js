@@ -6,7 +6,8 @@ import './components/user-list/wl-user-list.js';
 import { clearItemList, loadItemList } from './actions/itemList.js';
 import { clearUserList, loadUserList } from './actions/userList.js';
 import { html } from '@polymer/lit-element';
-import { setPage } from './actions/router.js';
+import { setPage } from './actions/page.js';
+import { setSelectedUser } from './actions/selectedUser.js';
 import store from './store.js';
 
 const loginTpl = html`
@@ -44,6 +45,7 @@ const homePage = (ctx) => {
 
   if (ctx.params.userId) {
     store.dispatch(loadItemList(ctx.params.userId));
+    store.dispatch(setSelectedUser(ctx.params.userId));
   }
 };
 

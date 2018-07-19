@@ -1,5 +1,5 @@
 import './components/main-app/wl-main-app.js';
-import { homePage, loginPage, unknownPage } from './router.js';
+import { homePage, loginPage, unknownPage } from './page.js';
 import authentication from './services/authentication.js';
 import page from 'page';
 
@@ -25,6 +25,7 @@ function isLoggedOut(ctx, next) {
 
 page('/', isLoggedIn, homePage);
 page('/login', isLoggedOut, loginPage);
+page('/logout', () => authentication.logOut());
 page('/users/:userId', isLoggedIn, homePage);
 page('*', unknownPage);
 

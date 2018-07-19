@@ -12,11 +12,16 @@ const setUserList = userList => ({ type: SET_USER_LIST, userList });
 /* ----------------- */
 /* -- API Actions -- */
 /* ----------------- */
-const loadUserList = () => async (dispatch) => {
-  try {
-    const userList = await userService.getUserList();
+const loadUserList = () => async (dispatch, getState) => {
+  const { userList } = getState();
 
-    dispatch(setUserList(userList));
+  // List has already been loaded
+  if (Object.keys(userList).length > 0) return;
+
+  try {
+    const list = await userService.getUserList();
+
+    dispatch(setUserList(list));
   } catch (e) {
     console.error(e);
   }

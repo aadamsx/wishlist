@@ -1,5 +1,5 @@
+import '../header/wl-header.js';
 import '../layout/wl-app-layout.js';
-import '../layout/wl-header.js';
 import { connect } from 'pwa-helpers/connect-mixin.js';
 import { html, LitElement } from '@polymer/lit-element';
 import store from '../../store.js';
@@ -36,9 +36,9 @@ class WLMainApp extends connect(store)(LitElement) {
   }
 
   _stateChanged(state) {
-    if (!state.router.page) return;
+    if (!state.page) return;
 
-    this._page = state.router.page;
+    this._page = state.page;
   }
 }
 

@@ -8,7 +8,7 @@ class WLHeader extends connect(store)(LitElement) {
 
   static get properties() {
     return {
-      _isLoggedIn: Boolean,
+      _currentUser: Object,
     };
   }
 
@@ -39,14 +39,14 @@ class WLHeader extends connect(store)(LitElement) {
   constructor() {
     super();
 
-    this._isLoggedIn = false;
+    this._currentUser = {};
   }
 
-  _render({ _isLoggedIn }) {
-    const logoutEl = _isLoggedIn
+  _render({ _currentUser }) {
+    const logoutEl = _currentUser.id
       ? html`
         <small>
-          <a href="logout" on-click=${e => this.logoutHandler(e)}>Logout</a>
+          <a href="logout">Logout</a>
         </small>
       `
       : html``;
@@ -59,14 +59,8 @@ class WLHeader extends connect(store)(LitElement) {
     `;
   }
 
-  logoutHandler(e) {
-    e.preventDefault();
-
-    authentication.logOut();
-  }
-
   _stateChanged(state) {
-    this._isLoggedIn = state.loginStatus;
+    this._currentUser = state.currentUser;
   }
 }
 

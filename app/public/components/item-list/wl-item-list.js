@@ -13,14 +13,37 @@ class WLItemList extends connect(store)(LitElement) {
     };
   }
 
+  static get styles() {
+    return html`
+      <style>
+        :host {
+          display: block;
+          padding: .5rem;
+          border: 1px solid #dddddd;
+          border-radius: 4px;
+        }
+
+        h2 {
+          margin: 0;
+        }
+      </style>
+    `;
+  }
+
   _render({ _itemList }) {
     const itemList = repeat(
       Object.entries(_itemList),
       ([k]) => k,
-      ([k, v]) => html`<wl-item-list-item id=${k} name=${v.title}></wl-item-list-item>`,
+      ([k, v]) => {
+        const item = Object.assign({ id: k }, v);
+
+        return html`<wl-item-list-item item=${item}></wl-item-list-item--user>`;
+      },
     );
 
     return html`
+      ${WLItemList.styles}
+      <h2>Items</h2>
       ${itemList}
     `;
   }

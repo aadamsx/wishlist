@@ -14,16 +14,32 @@ const setItems = itemList => ({ itemList, type: SET_ITEMS });
 /* ----------------- */
 /* -- API Actions -- */
 /* ----------------- */
-const addItem = title => async (dispatch, getState) => {
-  const { itemList, user } = getState();
+const addItem = (title, price, url) => async (dispatch, getState) => {
+  const { currentUser, itemList } = getState();
 
   try {
     const item = await itemService.addItem({
+      price,
       title,
-      userId: user.id,
+      url,
+      userId: currentUser.id,
     });
 
     itemList[item.id] = item;
+
+    dispatch(setItems(itemList));
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+const buyItem = id => async (dispatch, getState) => {
+  const { currentUser, itemList } = getState();
+
+  try {
+    const newItem = await itemService.buyItem(id, currentUser.id);
+
+    itemList[id] = newItem;
 
     dispatch(setItems(itemList));
   } catch (e) {
@@ -41,11 +57,33 @@ const deleteItem = id => async (dispatch) => {
   }
 };
 
-const loadItemList = userId => async (dispatch) => {
+const loadItemList = userId => async (dispatch, getState) => {
   dispatch(clearItemList());
+
+  const { currentUser } = getState();
 
   try {
     const itemList = await itemService.getItems(userId);
+
+    if (userId === currentUser.id) {
+      Object.values(itemList).forEach((i) => {
+        delete i.isBought;
+      });
+    }
+
+    dispatch(setItems(itemList));
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+const unbuyItem = id => async (dispatch, getState) => {
+  const { currentUser, itemList } = getState();
+
+  try {
+    const newItem = await itemService.unbuyItem(id, currentUser.id);
+
+    itemList[id] = newItem;
 
     dispatch(setItems(itemList));
   } catch (e) {
@@ -61,7 +99,9 @@ export {
 
 export {
   addItem,
+  buyItem,
   clearItemList,
   deleteItem,
   loadItemList,
+  unbuyItem,
 };

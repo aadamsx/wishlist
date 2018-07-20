@@ -3,6 +3,7 @@ import DeleteDoc from './DeleteDoc.js';
 import firebase from './firebase.js';
 import QueryCollection from './QueryCollection.js';
 import QueryDoc from './QueryDoc.js';
+import UpdateDoc from './UpdateDoc.js';
 
 class Database {
   constructor() {
@@ -25,8 +26,8 @@ class Database {
     return new QueryDoc(this._db, path, docId);
   }
 
-  update() {
-    throw new Error('Not Implemented');
+  update(path, docId) {
+    return new UpdateDoc(this._db, path, docId);
   }
 }
 

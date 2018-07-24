@@ -13,13 +13,13 @@ class Authentication {
       if (!this._routerStarted) {
         this._routerStarted = true;
 
-        router.start();
-
         if (this._auth.currentUser) {
           store.dispatch(setCurrentUser(this._auth.currentUser));
         } else {
           store.dispatch(clearCurrentUser());
         }
+
+        router.start();
 
         return;
       }

@@ -14,20 +14,25 @@ const setItems = itemList => ({ itemList, type: SET_ITEMS });
 /* ----------------- */
 /* -- API Actions -- */
 /* ----------------- */
-const addItem = (title, price, url) => async (dispatch, getState) => {
-  const { currentUser, itemList } = getState();
+const addItem = (title, price, url, category) => async (dispatch, getState) => {
+  const { currentUser, itemList, selectedUser } = getState();
 
   try {
     const item = await itemService.addItem({
+      category,
       price,
       title,
       url,
       userId: currentUser.id,
     });
 
-    itemList[item.id] = item;
+    if (currentUser.id === selectedUser.id) {
+      delete item.isBought;
 
-    dispatch(setItems(itemList));
+      itemList[item.id] = item;
+
+      dispatch(setItems(itemList));
+    }
   } catch (e) {
     console.error(e);
   }

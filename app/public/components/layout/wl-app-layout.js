@@ -9,7 +9,7 @@ class WLAppLayout extends LitElement {
         :host {
           display: grid;
           gap: 1rem;
-          grid-template-rows: 56px calc(100vh - 56px - 1rem);
+          grid-template-rows: 56px auto;
         }
       </style>
     `;

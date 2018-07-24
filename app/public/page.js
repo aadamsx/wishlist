@@ -1,3 +1,4 @@
+import './components/add-item/wl-add-item.js';
 import './components/item-list/wl-item-list.js';
 import './components/layout/wl-double-pane.js';
 import './components/layout/wl-single-pane.js';
@@ -21,6 +22,8 @@ const homeTpl = html`
     <wl-user-list slot="left-pane"></wl-user-list>
     <wl-item-list slot="main-pane"></wl-item-list>
   </wl-double-pane>
+
+  <wl-add-item></wl-add-item>
 `;
 
 const loginPage = () => {

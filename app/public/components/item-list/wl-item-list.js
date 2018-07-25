@@ -62,7 +62,7 @@ class WLItemList extends connect(store)(LitElement) {
       ([k, v]) => {
         const item = Object.assign({ id: k }, v);
 
-        return html`<wl-item-list-item item=${item}></wl-item-list-item--user>`;
+        return html`<wl-item-list-item item=${item}></wl-item-list-item>`;
       },
     );
   }

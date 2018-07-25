@@ -42,18 +42,15 @@ const unknownPage = () => {
   store.dispatch(setPage(template));
 };
 
-const homePage = (ctx) => {
+const userPage = (ctx) => {
   store.dispatch(setPage(homeTpl));
   store.dispatch(loadUserList());
-
-  if (ctx.params.userId) {
-    store.dispatch(loadItemList(ctx.params.userId));
-    store.dispatch(setSelectedUser(ctx.params.userId));
-  }
+  store.dispatch(loadItemList(ctx.params.userId));
+  store.dispatch(setSelectedUser(ctx.params.userId));
 };
 
 export {
   loginPage,
   unknownPage,
-  homePage,
+  userPage,
 };

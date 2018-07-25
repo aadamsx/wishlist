@@ -27,6 +27,7 @@ class WLUserList extends connect(store)(LitElement) {
         .container {
           border-radius: 4px;
           border: 1px solid #dddddd;
+          margin-bottom: .5rem;
         }
 
         .user {
@@ -83,7 +84,9 @@ class WLUserList extends connect(store)(LitElement) {
     super();
 
     this.__allUsers = {};
+    this.__currentUser = null;
     this.__selectedUser = null;
+
     this._userList = {};
   }
 
@@ -102,8 +105,16 @@ class WLUserList extends connect(store)(LitElement) {
       },
     );
 
+    const currentUserClasses = classNames('user', {
+      active: this.__currentUser === this.__selectedUser,
+    });
+
     return html`
       ${WLUserList.styles}
+
+      <div class="container">
+        <a class$="${currentUserClasses}" href="/users/${this.__currentUser}">Myself</a>
+      </div>
 
       <div class="container" on-keydown=${e => this.keyDownHandler(e)}>
         <div class="search" tabindex="-1" on-focus=${() => this._root.getElementById('search').focus()}>
@@ -116,8 +127,13 @@ class WLUserList extends connect(store)(LitElement) {
   }
 
   _stateChanged(state = {}) {
-    this.__allUsers = state.userList;
+    this.__currentUser = state.currentUser.id;
     this.__selectedUser = state.selectedUser.id;
+
+    this.__allUsers = state.userList;
+
+    // Don't show the current user in the user list
+    delete this.__allUsers[this.__currentUser];
 
     if (this._root) {
       const searchEl = this._root.getElementById('search');
@@ -153,9 +169,11 @@ class WLUserList extends connect(store)(LitElement) {
 
         break;
       case 40: // Down arrow
-        if (!e.target.nextElementSibling) break;
-
-        e.target.nextElementSibling.focus();
+        if (e.target.nextElementSibling) {
+          e.target.nextElementSibling.focus();
+        } else if (e.target.id === 'search') {
+          e.target.parentElement.nextElementSibling.focus();
+        }
 
         break;
 
@@ -164,18 +182,7 @@ class WLUserList extends connect(store)(LitElement) {
   }
 
   searchHandler(e) {
-    e.preventDefault();
-
-    switch (e.keyCode) {
-      case 40: // Down arrow
-        // Focus the first user
-        this._root.querySelector('a').focus();
-
-        break;
-
-      default:
-        this._filterUsers(e.target.value);
-    }
+    this._filterUsers(e.target.value);
   }
 }
 

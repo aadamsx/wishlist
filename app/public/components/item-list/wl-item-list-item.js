@@ -1,5 +1,6 @@
 import { buyItem, deleteItem, unbuyItem } from '../../actions/itemList.js';
 import { html, LitElement } from '@polymer/lit-element';
+import buttonStyles from '../../styles/buttonStyles.js';
 import store from '../../store.js';
 
 class WLItemListItem extends LitElement {
@@ -15,15 +16,17 @@ class WLItemListItem extends LitElement {
 
   static get styles() {
     return html`
+      ${buttonStyles}
       <style>
         :host {
           display: block;
-          line-height: 2rem;
+          line-height: 1.75rem;
         }
 
         .container {
           display: flex;
           justify-content: space-between;
+          margin-bottom: 4px;
         }
 
         .bought {
@@ -43,7 +46,7 @@ class WLItemListItem extends LitElement {
     const title = item.url
       ? html`
         <div class$="${classes}">
-          <a href=${item.url} target="_blank">${item.title}</a> ($${item.price})
+          <a href=${item.url} rel="noopener" target="_blank">${item.title}</a> ($${item.price})
         </div>
       `
       : html`

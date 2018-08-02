@@ -7,7 +7,7 @@ module.exports = {
 
   output: {
     path: `${__dirname}/dist`,
-    filename: '[name].js',
+    filename: '[name].[chunkhash:8].js',
   },
 
   plugins: [

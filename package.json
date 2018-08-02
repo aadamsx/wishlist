@@ -1,5 +1,7 @@
 {
-  "workspaces": ["app"],
+  "workspaces": [
+    "app"
+  ],
   "private": true,
   "scripts": {
     "deploy": "npm-run-all -s deploy:*",

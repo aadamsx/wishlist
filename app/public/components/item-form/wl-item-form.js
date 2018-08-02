@@ -25,7 +25,7 @@ class WLItemForm extends LitElement {
 
         form {
           display: grid;
-          grid-template-columns: 1fr 3fr;
+          grid-template-columns: 1fr 5fr;
           width: 500px;
           gap: 10px;
         }
@@ -33,6 +33,10 @@ class WLItemForm extends LitElement {
         label {
           align-self: center;
           justify-self: end;
+        }
+
+        h2 {
+          margin-top: 0;
         }
 
         .actions {
@@ -52,10 +56,13 @@ class WLItemForm extends LitElement {
   _render() {
     const action = this.item.id ? 'Save' : 'Add';
     const category = this.item.category || ListCategories.WANT;
+    const title = this.item.id ? 'Edit Item' : 'Add Item';
 
     return html`
       ${formStyles}
       ${WLItemForm.styles}
+
+      <h2>${title}</h2>
 
       <form on-submit=${e => this.submitHandler(e)}>
         <label for="name">Name</label>

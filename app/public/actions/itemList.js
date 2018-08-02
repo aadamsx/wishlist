@@ -1,3 +1,4 @@
+import { clearCurrentItem } from './currentItem.js';
 import { closeItemForm } from './itemFormState.js';
 import itemService from '../services/itemService.js';
 
@@ -116,6 +117,7 @@ const updateItem = (id, name, price, url, category) => async (dispatch, getState
 
       dispatch(setItems(itemList));
       dispatch(closeItemForm());
+      dispatch(clearCurrentItem());
     }
   } catch (e) {
     console.error(e);

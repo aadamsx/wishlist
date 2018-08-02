@@ -1,4 +1,5 @@
 import '../base/button/wl-fab.js';
+import '../base/modal/wl-modal.js';
 import '../header/wl-header.js';
 import '../item-list/wl-item-list.js';
 import '../layout/wl-app-layout.js';
@@ -29,14 +30,23 @@ class WLMainApp extends connect(store)(LitElement) {
   }
 
   _render({ _currentItem, _isFormOpen, _page }) {
+    const form = _isFormOpen
+      ? html`
+        <wl-modal>
+          <wl-item-form item=${_currentItem}></wl-item-form>
+        </wl-modal>
+      `
+      : '';
+
     return html`
       ${WLMainApp.styles}
 
       <wl-app-layout>
         <wl-header></wl-header>
         ${_page}
-        ${_isFormOpen ? html`<wl-item-form item=${_currentItem}></wl-item-form>` : ''}
       </wl-app-layout>
+
+      ${form}
     `;
   }
 

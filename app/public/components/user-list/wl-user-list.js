@@ -26,6 +26,17 @@ class WLUserList extends connect(store)(LitElement) {
           display: block;
         }
 
+        wl-fab {
+          bottom: 40px;
+          position: fixed;
+          right: 40px;
+          transition: transform .15s ease-in-out;
+        }
+
+        wl-fab.hide {
+          transform: translateY(200px);
+        }
+
         .container {
           border-radius: 4px;
           border: 1px solid #dddddd;
@@ -108,16 +119,15 @@ class WLUserList extends connect(store)(LitElement) {
       },
     );
 
-    const currentUserClasses = classNames('user', {
-      active: this.__currentUser === this.__selectedUser,
-    });
+    const isCurrentUserActive = this.__currentUser === this.__selectedUser;
+
+    const currentUserClasses = classNames('user', { active: isCurrentUserActive });
 
     return html`
       ${WLUserList.styles}
 
       <div class="container">
         <a class$="${currentUserClasses}" href="/users/${this.__currentUser}">Myself</a>
-        <button on-click="${() => this.buttonHandler()}">+</button>
       </div>
 
       <div class="container" on-keydown=${e => this.keyDownHandler(e)}>
@@ -127,6 +137,11 @@ class WLUserList extends connect(store)(LitElement) {
 
         ${userList}
       </div>
+
+      <wl-fab
+        class$="${isCurrentUserActive ? '' : 'hide'}"
+        on-click="${() => this.buttonHandler()}"
+      >+</wl-fab>
     `;
   }
 

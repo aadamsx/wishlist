@@ -26,12 +26,12 @@ class WLButton extends LitElement {
         }
 
         button {
+          background-color: var(--button__background-color);
           border-radius: 4px;
           border: 1px solid #dddddd;
           height: 1.75rem;
           line-height: 1.75rem;
           padding: 0 1rem;
-          background-color: var(--button__background-color);
         }
 
         button:focus,
@@ -53,8 +53,6 @@ class WLButton extends LitElement {
         .primary:focus,
         .primary:hover {
           background-color: var(--button-primary__background-color--hover);
-          cursor: pointer;
-          outline: none;
         }
 
         .primary:active {

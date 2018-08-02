@@ -1,3 +1,4 @@
+import '../base/button/wl-fab.js';
 import '../header/wl-header.js';
 import '../item-list/wl-item-list.js';
 import '../layout/wl-app-layout.js';
@@ -34,7 +35,6 @@ class WLMainApp extends connect(store)(LitElement) {
       <wl-app-layout>
         <wl-header></wl-header>
         ${_page}
-
         ${_isFormOpen ? html`<wl-item-form item=${_currentItem}></wl-item-form>` : ''}
       </wl-app-layout>
     `;

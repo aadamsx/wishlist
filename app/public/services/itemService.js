@@ -19,7 +19,7 @@ class ItemService {
   async buyItem(id, buyerId) {
     return database
       .update(this.path, id)
-      .withValue({
+      .withValues({
         buyerId,
         isBought: true,
       })
@@ -42,10 +42,17 @@ class ItemService {
   async unbuyItem(id) {
     return database
       .update(this.path, id)
-      .withValue({
+      .withValues({
         buyerId: null,
         isBought: false,
       })
+      .execute();
+  }
+
+  async updateItem(id, item) {
+    return database
+      .update(this.path, id)
+      .withValues(Object.assign({}, item))
       .execute();
   }
 }

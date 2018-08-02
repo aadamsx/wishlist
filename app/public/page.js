@@ -1,5 +1,4 @@
-import './components/add-item/wl-add-item.js';
-import './components/item-list/wl-item-list.js';
+import './components/item-form/wl-item-form.js';
 import './components/layout/wl-double-pane.js';
 import './components/layout/wl-single-pane.js';
 import './components/login/wl-login.js';
@@ -11,20 +10,24 @@ import { setPage } from './actions/page.js';
 import { setSelectedUser } from './actions/selectedUser.js';
 import store from './store.js';
 
+const homeTpl = html`
+  <wl-double-pane>
+    <wl-user-list slot="left-pane"></wl-user-list>
+    <wl-item-list slot="main-pane"></wl-item-list>
+  </wl-double-pane>
+`;
+
 const loginTpl = html`
   <wl-single-pane>
     <wl-login></wl-login>
   </wl-single-pane>
 `;
 
-const homeTpl = html`
-  <wl-double-pane>
-    <wl-user-list slot="left-pane"></wl-user-list>
-    <wl-item-list slot="main-pane"></wl-item-list>
-  </wl-double-pane>
-
-  <wl-add-item></wl-add-item>
-`;
+// const signUpTpl = html`
+//   <wl-single-pane>
+//     <wl-signup></wl-signup>
+//   </wl-single-pane>
+// `;
 
 const loginPage = () => {
   store.dispatch(setPage(loginTpl));

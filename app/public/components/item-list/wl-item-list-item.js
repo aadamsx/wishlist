@@ -1,6 +1,8 @@
+import '../base/button/wl-button.js';
 import { buyItem, deleteItem, unbuyItem } from '../../actions/itemList.js';
 import { html, LitElement } from '@polymer/lit-element';
-import buttonStyles from '../../styles/buttonStyles.js';
+import { openItemForm } from '../../actions/itemFormState.js';
+import { setCurrentItem } from '../../actions/currentItem.js';
 import store from '../../store.js';
 
 class WLItemListItem extends LitElement {
@@ -16,7 +18,6 @@ class WLItemListItem extends LitElement {
 
   static get styles() {
     return html`
-      ${buttonStyles}
       <style>
         :host {
           display: block;
@@ -43,22 +44,22 @@ class WLItemListItem extends LitElement {
     const actions = this.getActions();
     const classes = item.isBought ? 'bought' : '';
 
-    const title = item.url
+    const name = item.url
       ? html`
         <div class$="${classes}">
-          <a href=${item.url} rel="noopener" target="_blank">${item.title}</a> ($${item.price})
+          <a href=${item.url} rel="noopener" target="_blank">${item.name}</a> ($${item.price})
         </div>
       `
       : html`
         <div class$="${classes}">
-          ${item.title} ($${item.price})
+          ${item.name} ($${item.price})
         </div>
       `;
 
     return html`
       ${WLItemListItem.styles}
       <div class="container">
-        ${title}
+        ${name}
 
         <div>${actions}</div>
       </div>
@@ -74,6 +75,11 @@ class WLItemListItem extends LitElement {
     store.dispatch(deleteItem(this.item.id));
   }
 
+  editHandler() {
+    store.dispatch(setCurrentItem(this.item));
+    store.dispatch(openItemForm());
+  }
+
   unbuyHandler() {
     store.dispatch(unbuyItem(this.item.id));
   }
@@ -85,20 +91,20 @@ class WLItemListItem extends LitElement {
     switch (this.item.isBought) {
       case undefined:
         return html`
-          <button type="button">Edit</button>
-          <button on-click="${e => this.deleteHandler(e)}" type="button">Delete</button>
+          <wl-button on-click="${e => this.editHandler(e)}">Edit</wl-button>
+          <wl-button on-click="${e => this.deleteHandler(e)}">Delete</wl-button>
         `;
 
       case true:
         return this.item.buyerId === currentUser.id
           ? html`
-            <button on-click="${() => this.unbuyHandler()}" type="button">Un-Buy</button>
+            <wl-button on-click="${() => this.unbuyHandler()}">Un-Buy</wl-button>
           `
           : html``;
 
       case false:
         return html`
-          <button on-click="${() => this.buyHandler()}" type="button">Buy</button>
+          <wl-button on-click="${() => this.buyHandler()}">Buy</wl-button>
         `;
 
       default:

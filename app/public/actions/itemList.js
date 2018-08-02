@@ -1,3 +1,4 @@
+import { closeItemForm } from './itemFormState.js';
 import itemService from '../services/itemService.js';
 
 /* --------------------- */
@@ -14,14 +15,14 @@ const setItems = itemList => ({ itemList, type: SET_ITEMS });
 /* ----------------- */
 /* -- API Actions -- */
 /* ----------------- */
-const addItem = (title, price, url, category) => async (dispatch, getState) => {
+const addItem = (name, price, url, category) => async (dispatch, getState) => {
   const { currentUser, itemList, selectedUser } = getState();
 
   try {
     const item = await itemService.addItem({
       category,
+      name,
       price,
-      title,
       url,
       userId: currentUser.id,
     });
@@ -32,6 +33,7 @@ const addItem = (title, price, url, category) => async (dispatch, getState) => {
       itemList[item.id] = item;
 
       dispatch(setItems(itemList));
+      dispatch(closeItemForm());
     }
   } catch (e) {
     console.error(e);
@@ -96,6 +98,30 @@ const unbuyItem = id => async (dispatch, getState) => {
   }
 };
 
+const updateItem = (id, name, price, url, category) => async (dispatch, getState) => {
+  const { currentUser, itemList, selectedUser } = getState();
+
+  try {
+    const item = await itemService.updateItem(id, {
+      category,
+      name,
+      price,
+      url,
+    });
+
+    if (currentUser.id === selectedUser.id) {
+      delete item.isBought;
+
+      itemList[item.id] = item;
+
+      dispatch(setItems(itemList));
+      dispatch(closeItemForm());
+    }
+  } catch (e) {
+    console.error(e);
+  }
+};
+
 export {
   CLEAR_ITEMS,
   REMOVE_ITEM,
@@ -109,4 +135,5 @@ export {
   deleteItem,
   loadItemList,
   unbuyItem,
+  updateItem,
 };

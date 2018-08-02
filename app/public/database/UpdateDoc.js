@@ -5,7 +5,7 @@ class UpdateDoc {
     this.docId = docId;
   }
 
-  withValue(values) {
+  withValues(values) {
     this.values = values;
 
     return this;

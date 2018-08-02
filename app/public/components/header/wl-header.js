@@ -1,6 +1,5 @@
 import { connect } from 'pwa-helpers/connect-mixin.js';
 import { html, LitElement } from '@polymer/lit-element';
-import authentication from '../../services/authentication.js';
 import store from '../../store.js';
 
 class WLHeader extends connect(store)(LitElement) {

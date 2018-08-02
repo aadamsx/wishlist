@@ -1,5 +1,7 @@
+import '../base/button/wl-button.js';
 import { connect } from 'pwa-helpers/connect-mixin.js';
 import { html, LitElement } from '@polymer/lit-element';
+import { openItemForm } from '../../actions/itemFormState.js';
 import { repeat } from 'lit-html/lib/repeat.js';
 import classNames from 'classnames';
 import store from '../../store.js';
@@ -41,13 +43,14 @@ class WLUserList extends connect(store)(LitElement) {
 
         .user:focus,
         .user:hover {
-          background-color: #dddddd;
+          background-color: #eceff1;
           outline: none;
         }
 
         .active {
           background-color: #b2dfdb;
         }
+
 
         .active:focus,
         .active:hover {
@@ -114,6 +117,7 @@ class WLUserList extends connect(store)(LitElement) {
 
       <div class="container">
         <a class$="${currentUserClasses}" href="/users/${this.__currentUser}">Myself</a>
+        <button on-click="${() => this.buttonHandler()}">+</button>
       </div>
 
       <div class="container" on-keydown=${e => this.keyDownHandler(e)}>
@@ -158,6 +162,10 @@ class WLUserList extends connect(store)(LitElement) {
 
       return list;
     }, {});
+  }
+
+  buttonHandler() {
+    store.dispatch(openItemForm());
   }
 
   keyDownHandler(e) {

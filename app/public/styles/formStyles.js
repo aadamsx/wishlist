@@ -1,9 +1,6 @@
 import { html } from '@polymer/lit-element';
-import buttonStyles from './buttonStyles.js';
 
 export default html`
-  ${buttonStyles}
-
   <style>
     input,
     select {

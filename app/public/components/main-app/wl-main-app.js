@@ -1,4 +1,5 @@
 import '../header/wl-header.js';
+import '../item-list/wl-item-list.js';
 import '../layout/wl-app-layout.js';
 import { connect } from 'pwa-helpers/connect-mixin.js';
 import { html, LitElement } from '@polymer/lit-element';
@@ -9,6 +10,8 @@ class WLMainApp extends connect(store)(LitElement) {
 
   static get properties() {
     return {
+      _currentItem: Object,
+      _isFormOpen: Object,
       _page: Object,
     };
   }
@@ -24,13 +27,15 @@ class WLMainApp extends connect(store)(LitElement) {
     `;
   }
 
-  _render({ _page }) {
+  _render({ _currentItem, _isFormOpen, _page }) {
     return html`
       ${WLMainApp.styles}
 
       <wl-app-layout>
         <wl-header></wl-header>
         ${_page}
+
+        ${_isFormOpen ? html`<wl-item-form item=${_currentItem}></wl-item-form>` : ''}
       </wl-app-layout>
     `;
   }
@@ -38,6 +43,8 @@ class WLMainApp extends connect(store)(LitElement) {
   _stateChanged(state) {
     if (!state.page) return;
 
+    this._currentItem = state.currentItem;
+    this._isFormOpen = state.itemFormState;
     this._page = state.page;
   }
 }

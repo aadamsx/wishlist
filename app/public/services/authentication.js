@@ -1,3 +1,4 @@
+import { addNotification } from '../actions/notifications.js';
 import { clearCurrentUser, setCurrentUser } from '../actions/currentUser.js';
 import database from '../database/database.js';
 import firebase from '../database/firebase.js';
@@ -41,10 +42,19 @@ class Authentication {
     return this._auth.currentUser;
   }
 
-  async logInWithEmail(email, password) {
-    await this._auth.signInWithEmailAndPassword(email, password);
+  logInWithEmail(email, password) {
+    this._auth.signInWithEmailAndPassword(email, password).catch((e) => {
+      switch (e.code) {
+        case 'auth/invalid-email':
+        case 'auth/wrong-password':
+          store.dispatch(addNotification('Invalid username/password'));
 
-    return this._auth.currentUser;
+          break;
+
+        default:
+          store.dispatch(addNotification('Unknown error occurred'));
+      }
+    });
   }
 
   logOut() {

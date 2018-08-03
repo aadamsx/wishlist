@@ -3,6 +3,7 @@ import '../base/modal/wl-modal.js';
 import '../header/wl-header.js';
 import '../item-list/wl-item-list.js';
 import '../layout/wl-app-layout.js';
+import '../notifications/wl-notifications.js';
 import { connect } from 'pwa-helpers/connect-mixin.js';
 import { html, LitElement } from '@polymer/lit-element';
 import store from '../../store.js';
@@ -14,6 +15,7 @@ class WLMainApp extends connect(store)(LitElement) {
     return {
       _currentItem: Object,
       _isFormOpen: Object,
+      _notifications: Array,
       _page: Object,
     };
   }
@@ -25,11 +27,20 @@ class WLMainApp extends connect(store)(LitElement) {
           --primary-color: #26a69a;
           --primary-text: #fafafa;
         }
+
+        wl-notifications {
+          bottom: 1rem;
+          left: 0;
+          margin: 0 auto;
+          position: fixed;
+          right: 0;
+          width: 400px;
+        }
       </style>
     `;
   }
 
-  _render({ _currentItem, _isFormOpen, _page }) {
+  _render({ _currentItem, _isFormOpen, _notifications, _page }) {
     const form = _isFormOpen
       ? html`
         <wl-modal>
@@ -47,6 +58,8 @@ class WLMainApp extends connect(store)(LitElement) {
       </wl-app-layout>
 
       ${form}
+
+      <wl-notifications notifications="${_notifications}"></wl-notifications>
     `;
   }
 
@@ -55,6 +68,7 @@ class WLMainApp extends connect(store)(LitElement) {
 
     this._currentItem = state.currentItem;
     this._isFormOpen = state.itemFormState;
+    this._notifications = state.notifications;
     this._page = state.page;
   }
 }

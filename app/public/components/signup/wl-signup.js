@@ -1,7 +1,9 @@
 import '../base/button/wl-button.js';
+import { addNotification } from '../../actions/notifications.js';
 import { html, LitElement } from '@polymer/lit-element';
 import authentication from '../../services/authentication.js';
 import formStyles from '../../styles/formStyles.js';
+import store from '../../store.js';
 
 class WLSignUp extends LitElement {
   static get is() { return 'wl-signup'; }
@@ -56,12 +58,40 @@ class WLSignUp extends LitElement {
     const name = this._root.getElementById('name').value;
     const password = this._root.getElementById('password').value;
 
-    if (password !== confirm) {
-      // TODO: Notify user
-      return;
-    }
+    if (this.isInvalid(name, email, password, confirm)) return;
+
 
     authentication.signUp(name, email, password);
+  }
+
+  isInvalid(name, email, password, confirm) {
+    let isInvalid = false;
+
+    if (password !== confirm) {
+      store.dispatch(addNotification('Passwords must match'));
+
+      isInvalid = true;
+    }
+
+    if (password.trim().length === 0) {
+      store.dispatch(addNotification('Password must not be blank'));
+
+      isInvalid = true;
+    }
+
+    if (email.trim().length === 0) {
+      store.dispatch(addNotification('Email must not be blank'));
+
+      isInvalid = true;
+    }
+
+    if (name.trim().length === 0) {
+      store.dispatch(addNotification('Name must not be blank'));
+
+      isInvalid = true;
+    }
+
+    return isInvalid;
   }
 }
 

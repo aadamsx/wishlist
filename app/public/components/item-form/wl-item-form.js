@@ -1,5 +1,6 @@
 import '../base/button/wl-button.js';
 import { addItem, updateItem } from '../../actions/itemList.js';
+import { addNotification } from '../../actions/notifications.js';
 import { clearCurrentItem } from '../../actions/currentItem.js';
 import { closeItemForm } from '../../actions/itemFormState.js';
 import { html, LitElement } from '@polymer/lit-element';
@@ -89,7 +90,7 @@ class WLItemForm extends LitElement {
     const url = this._root.querySelector('#url').value;
 
     if (name.trim().length === 0) {
-      // TODO: Notify user
+      store.dispatch(addNotification('Name must not be blank'));
 
       return;
     }

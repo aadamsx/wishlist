@@ -11,8 +11,8 @@ class ItemService {
 
   async addItem(item) {
     return database
-      .create(this.path)
-      .withValue(Object.assign({}, item, ITEM_DEFAULTS))
+      .createDoc(this.path)
+      .withValues(Object.assign({}, item, ITEM_DEFAULTS))
       .execute();
   }
 

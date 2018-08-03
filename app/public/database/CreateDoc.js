@@ -2,26 +2,41 @@ class CreateDoc {
   constructor(db, path) {
     this.db = db;
     this.path = path;
-    this.value = null;
+    this.values = null;
   }
 
-  withValue(value) {
-    this.value = value;
+  withKey(key) {
+    this.key = key;
+
+    return this;
+  }
+
+  withValues(values) {
+    this.values = values;
 
     return this;
   }
 
   async execute() {
-    if (!this.value) {
-      throw new Error('Value to create not set. Please call `withValue()` before executing');
+    if (!this.values) {
+      throw new Error('Values to create not set. Please call `withValues()` before executing');
     }
 
     const colRef = this.db.collection(this.path);
 
-    const docRef = await colRef.add(this.value);
+    let docRef;
+
+    if (this.key) {
+      docRef = colRef.doc(this.key);
+
+      await docRef.set(this.values);
+    } else {
+      docRef = await colRef.add(this.values);
+    }
+
 
     return {
-      ...this.value,
+      ...this.values,
       id: docRef.id,
     };
   }

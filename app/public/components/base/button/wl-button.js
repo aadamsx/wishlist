@@ -22,7 +22,7 @@ class WLButton extends LitElement {
           --button-primary__background-color--active: #00897b;
           --button-primary__color: #fafafa;
 
-          display: inline-block;
+          display: content;
         }
 
         button {
@@ -47,6 +47,7 @@ class WLButton extends LitElement {
 
         .primary {
           background-color: var(--button-primary__background-color);
+          border-color: var(--button-primary__background-color);
           color: var(--button-primary__color);
         }
 

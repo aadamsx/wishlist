@@ -10,7 +10,7 @@ class Database {
     this._db = firebase.firestore();
   }
 
-  create(path) {
+  createDoc(path) {
     return new CreateDoc(this._db, path);
   }
 

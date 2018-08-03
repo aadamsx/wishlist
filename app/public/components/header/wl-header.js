@@ -42,19 +42,23 @@ class WLHeader extends connect(store)(LitElement) {
   }
 
   _render({ _currentUser }) {
-    const logoutEl = _currentUser.id
+    const actions = _currentUser.id
       ? html`
         <small>
           <a href="logout">Logout</a>
         </small>
       `
-      : html``;
+      : html`
+        <small>
+          <a href="signup">Sign Up</a>
+        </small>
+      `;
 
     return html`
       ${WLHeader.styles}
 
       <a href="">Wishlist</a>
-      ${logoutEl}
+      ${actions}
     `;
   }
 

@@ -8,7 +8,7 @@ class WLSinglePane extends LitElement {
       <style>
         :host {
           display: grid;
-          grid-template-columns: 1fr minmax(500px, 2fr) 1fr;
+          grid-template-columns: 1fr minmax(500px, 600px) 1fr;
           grid-template-areas: ". content .";
         }
 

@@ -1,4 +1,5 @@
 import { clearCurrentUser, setCurrentUser } from '../actions/currentUser.js';
+import database from '../database/database.js';
 import firebase from '../database/firebase.js';
 import store from '../store.js';
 
@@ -48,6 +49,16 @@ class Authentication {
 
   logOut() {
     this._auth.signOut();
+  }
+
+  async signUp(name, email, password) {
+    const userRef = await this._auth.createUserWithEmailAndPassword(email, password);
+
+    database
+      .createDoc('users')
+      .withKey(userRef.user.uid)
+      .withValues({ name })
+      .execute();
   }
 }
 

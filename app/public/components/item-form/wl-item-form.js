@@ -19,29 +19,8 @@ class WLItemForm extends LitElement {
   static get styles() {
     return html`
       <style>
-        * {
-          box-sizing: border-box;
-        }
-
         form {
-          display: grid;
-          grid-template-columns: 1fr 5fr;
           width: 500px;
-          gap: 10px;
-        }
-
-        label {
-          align-self: center;
-          justify-self: end;
-        }
-
-        h2 {
-          margin-top: 0;
-        }
-
-        .actions {
-          grid-column-start: 2;
-          justify-self: end;
         }
       </style>
     `;
@@ -65,7 +44,7 @@ class WLItemForm extends LitElement {
       <h2>${title}</h2>
 
       <form on-submit=${e => this.submitHandler(e)}>
-        <label for="name">Name</label>
+        <label class="required" for="name">Name</label>
         <input id="name" type="text" value=${this.item.name}>
 
         <label for="price">Price</label>
@@ -108,6 +87,12 @@ class WLItemForm extends LitElement {
     const name = this._root.querySelector('#name').value;
     const price = this._root.querySelector('#price').value;
     const url = this._root.querySelector('#url').value;
+
+    if (name.trim().length === 0) {
+      // TODO: Notify user
+
+      return;
+    }
 
     if (isNew) {
       store.dispatch(addItem(name, price, url, category));

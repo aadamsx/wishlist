@@ -6,6 +6,7 @@
   "scripts": {
     "deploy": "npm-run-all -s deploy:*",
     "deploy:app": "yarn workspace app deploy",
+    "deploy:rules": "firebase deploy --only firestore:rules",
     "start": "npm-run-all -p start:*",
     "start:app": "yarn workspace app start",
     "test": "npm-run-all test:*",

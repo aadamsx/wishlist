@@ -1,3 +1,4 @@
+const firebaseConfig = require('./firebase.config.js');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
@@ -14,6 +15,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       minify: true,
       template: './public/index.html',
+      firebaseConfig,
     }),
   ],
 };

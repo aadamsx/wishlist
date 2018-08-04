@@ -1,7 +1,5 @@
-import '../base/button/wl-fab.js';
 import '../base/modal/wl-modal.js';
 import '../header/wl-header.js';
-import '../item-list/wl-item-list.js';
 import '../layout/wl-app-layout.js';
 import '../notifications/wl-notifications.js';
 import { connect } from 'pwa-helpers/connect-mixin.js';
@@ -41,14 +39,6 @@ class WLMainApp extends connect(store)(LitElement) {
   }
 
   _render({ _currentItem, _isFormOpen, _notifications, _page }) {
-    const form = _isFormOpen
-      ? html`
-        <wl-modal>
-          <wl-item-form item=${_currentItem}></wl-item-form>
-        </wl-modal>
-      `
-      : '';
-
     return html`
       ${WLMainApp.styles}
 
@@ -57,7 +47,9 @@ class WLMainApp extends connect(store)(LitElement) {
         ${_page}
       </wl-app-layout>
 
-      ${form}
+      <wl-modal active?="${_isFormOpen}">
+        <wl-item-form item=${_currentItem}></wl-item-form>
+      </wl-modal>
 
       <wl-notifications notifications="${_notifications}"></wl-notifications>
     `;

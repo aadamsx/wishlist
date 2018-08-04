@@ -3,6 +3,12 @@ import { html, LitElement } from '@polymer/lit-element';
 class WLModal extends LitElement {
   static get is() { return 'wl-modal'; }
 
+  static get properties() {
+    return {
+      active: Boolean,
+    };
+  }
+
   static get styles() {
     return html`
       <style>
@@ -42,7 +48,9 @@ class WLModal extends LitElement {
     `;
   }
 
-  _render() {
+  _render({ active }) {
+    if (!active) return html``;
+
     return html`
       ${WLModal.styles}
       <div class="backdrop"></div>

@@ -27,17 +27,17 @@ class WLNotificationItem extends LitElement {
           height: 48px;
           justify-content: space-between;
           margin-top: 1rem;
+          opacity: 0;
           padding: .5rem;
           transform: translateY(100px);
-          opacity: 0;
           width: 400px;
         }
 
         div.active {
+          opacity: 1;
+          transform: translateY(0);
           transition: opacity .2s cubic-bezier(.55, .08, .9, .55),
                       transform .2s ease-out;
-          transform: translateY(0);
-          opacity: 1;
         }
 
         div.removing {
@@ -55,6 +55,7 @@ class WLNotificationItem extends LitElement {
           line-height: 2rem;
           outline: none;
           width: 2rem;
+          transition: background-color .15s ease-in-out;
         }
 
         button:focus,
@@ -82,9 +83,9 @@ class WLNotificationItem extends LitElement {
   }
 
   _firstRendered() {
-    requestAnimationFrame(() => {
+    setTimeout(() => {
       this._root.querySelector('div').classList.add('active');
-    });
+    }, 0);
   }
 
   removeHandler(e) {

@@ -1,4 +1,5 @@
 import './components/item-form/wl-item-form.js';
+import './components/item-list/wl-item-list.js';
 import './components/layout/wl-double-pane.js';
 import './components/layout/wl-single-pane.js';
 import './components/login/wl-login.js';

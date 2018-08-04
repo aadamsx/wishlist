@@ -1,4 +1,5 @@
 import '../base/button/wl-button.js';
+import '../base/button/wl-fab.js';
 import { connect } from 'pwa-helpers/connect-mixin.js';
 import { html, LitElement } from '@polymer/lit-element';
 import { openItemForm } from '../../actions/itemFormState.js';

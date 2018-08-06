@@ -1,5 +1,6 @@
 import { html, LitElement } from '@polymer/lit-element';
 import { removeNotification } from '../../actions/notifications.js';
+import classNames from 'classnames';
 import store from '../../store.js';
 
 class WLNotificationItem extends LitElement {
@@ -7,6 +8,7 @@ class WLNotificationItem extends LitElement {
 
   static get properties() {
     return {
+      isError: Boolean,
       key: String,
       text: String,
     };
@@ -21,7 +23,7 @@ class WLNotificationItem extends LitElement {
 
         div {
           align-items: center;
-          background-color: #ffcdd2;
+          background-color: #e0e0e0;
           border-radius: 4px;
           display: flex;
           height: 48px;
@@ -33,14 +35,14 @@ class WLNotificationItem extends LitElement {
           width: 400px;
         }
 
-        div.active {
+        .active {
           opacity: 1;
           transform: translateY(0);
           transition: opacity .2s cubic-bezier(.55, .08, .9, .55),
                       transform .2s ease-out;
         }
 
-        div.removing {
+        .removing {
           transition: opacity .2s cubic-bezier(.13, .77, .42, .94),
                       transform .2s ease-in;
         }
@@ -54,27 +56,44 @@ class WLNotificationItem extends LitElement {
           height: 2rem;
           line-height: 2rem;
           outline: none;
-          width: 2rem;
           transition: background-color .15s ease-in-out;
+          width: 2rem;
         }
 
         button:focus,
         button:hover {
-          background-color: #ef9a9a;
+          background-color: #bdbdbd;
         }
 
         button:active {
+          background-color: #9e9e9e;
+        }
+
+        .error {
+          background-color: #ffcdd2;
+        }
+
+        .error button:focus,
+        .error button:hover {
+          background-color: #ef9a9a;
+        }
+
+        .error button:active {
           background-color: #e57373;
         }
       </style>
     `;
   }
 
-  _render({ text }) {
+  _render({ isError, text }) {
+    const classes = classNames({
+      error: isError,
+    });
+
     return html`
       ${WLNotificationItem.styles}
 
-      <div>
+      <div class$="${classes}">
         ${text}
 
         <button on-click="${e => this.removeHandler(e)}">&times;</button>
@@ -86,11 +105,17 @@ class WLNotificationItem extends LitElement {
     setTimeout(() => {
       this._root.querySelector('div').classList.add('active');
     }, 0);
+
+    setTimeout(() => this.removeSelf(), 3000);
   }
 
   removeHandler(e) {
     e.preventDefault();
 
+    this.removeSelf();
+  }
+
+  removeSelf() {
     this._root.querySelector('div').classList.remove('active');
     this._root.querySelector('div').classList.add('removing');
 

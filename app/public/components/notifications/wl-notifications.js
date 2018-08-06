@@ -21,7 +21,13 @@ class WLNotifcations extends LitElement {
     const notifications = repeat(
       this.notifications,
       n => n.key,
-      n => html`<wl-notification-item key="${n.key}" text="${n.text}"></wl-notification-item>`,
+      n => html`
+        <wl-notification-item
+          isError?="${n.isError}"
+          key="${n.key}"
+          text="${n.text}">
+        </wl-notification-item>
+      `,
     );
 
     return html`${notifications}`;

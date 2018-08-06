@@ -5,10 +5,11 @@ const INITIAL_STATE = [];
 let keyCounter = 0;
 
 const reducers = {
-  [ADD_NOTIFICATION]: (state, { notification }) => [
+  [ADD_NOTIFICATION]: (state, { isError, text }) => [
     {
+      isError,
       key: keyCounter++,
-      text: notification,
+      text,
     },
 
     ...state,

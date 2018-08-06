@@ -1,17 +1,17 @@
 import { CLEAR_CURRENT_USER, SET_CURRENT_USER } from '../actions/currentUser.js';
+import createReducer from '../utils/createReducer.js';
 
 const INITIAL_STATE = {};
 
 const reducers = {
   [CLEAR_CURRENT_USER]: () => ({}),
+
   [SET_CURRENT_USER]: (state, { currentUser }) => ({
-    id: currentUser.uid,
-    name: currentUser.displayName,
+    id: currentUser.id,
+    name: currentUser.name,
   }),
 };
 
-const userReducer = (state = INITIAL_STATE, action) => (
-  reducers[action.type] ? reducers[action.type](state, action) : state
-);
+const currentUserReducer = createReducer(reducers, INITIAL_STATE);
 
-export default userReducer;
+export default currentUserReducer;

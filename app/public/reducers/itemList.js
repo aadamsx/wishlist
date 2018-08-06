@@ -1,4 +1,5 @@
 import { CLEAR_ITEMS, REMOVE_ITEM, SET_ITEMS } from '../actions/itemList.js';
+import createReducer from '../utils/createReducer.js';
 
 const INITIAL_STATE = {};
 
@@ -16,8 +17,6 @@ const reducers = {
   [SET_ITEMS]: (state, { itemList }) => Object.assign({}, itemList),
 };
 
-const itemListReducer = (state = INITIAL_STATE, action) => (
-  reducers[action.type] ? reducers[action.type](state, action) : state
-);
+const itemListReducer = createReducer(reducers, INITIAL_STATE);
 
 export default itemListReducer;

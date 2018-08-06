@@ -2,7 +2,7 @@ import '../base/button/wl-button.js';
 import { addItem, updateItem } from '../../actions/itemList.js';
 import { addNotification } from '../../actions/notifications.js';
 import { clearCurrentItem } from '../../actions/currentItem.js';
-import { closeItemForm } from '../../actions/itemFormState.js';
+import { clearModal } from '../../actions/modal.js';
 import { html, LitElement } from '@polymer/lit-element';
 import formStyles from '../../styles/formStyles.js';
 import ListCategories from '../../utils/ListCategories.js';
@@ -63,7 +63,7 @@ class WLItemForm extends LitElement {
         <input id="url" type="text" value="${this.item.url}">
 
         <div class="actions">
-          <wl-button on-click="${e => this.submitHandler(e)}" purpose="primary">${action}</wl-button>
+          <wl-button on-click="${e => this.submitHandler(e)}" primary>${action}</wl-button>
           <wl-button on-click="${() => this.cancelHandler()}">Cancel</wl-button>
         </div>
       </form>
@@ -76,7 +76,7 @@ class WLItemForm extends LitElement {
 
   cancelHandler() {
     store.dispatch(clearCurrentItem());
-    store.dispatch(closeItemForm());
+    store.dispatch(clearModal());
   }
 
   submitHandler(e) {

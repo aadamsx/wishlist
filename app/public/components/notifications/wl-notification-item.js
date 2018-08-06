@@ -106,7 +106,7 @@ class WLNotificationItem extends LitElement {
       this._root.querySelector('div').classList.add('active');
     }, 0);
 
-    setTimeout(() => this.removeSelf(), 3000);
+    setTimeout(() => this.removeSelf(), 3500);
   }
 
   removeHandler(e) {

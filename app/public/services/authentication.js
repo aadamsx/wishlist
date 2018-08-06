@@ -1,8 +1,10 @@
 import { addNotification } from '../actions/notifications.js';
 import { clearCurrentUser, setCurrentUser } from '../actions/currentUser.js';
+import { clearModal } from '../actions/modal.js';
 import database from '../database/database.js';
 import firebase from '../database/firebase.js';
 import store from '../store.js';
+import userService from './userService.js';
 
 class Authentication {
   constructor() {
@@ -11,23 +13,29 @@ class Authentication {
   }
 
   start(router) {
-    this._auth.onAuthStateChanged(() => {
+    this._auth.onAuthStateChanged(async () => {
       if (!this._routerStarted) {
         this._routerStarted = true;
 
         if (this._auth.currentUser) {
-          store.dispatch(setCurrentUser(this._auth.currentUser));
+          const user = await userService.getUser(this._auth.currentUser.uid);
+
+          store.dispatch(setCurrentUser(user));
+
+          router.start();
         } else {
           store.dispatch(clearCurrentUser());
-        }
 
-        router.start();
+          router.start();
+        }
 
         return;
       }
 
       if (this._auth.currentUser) {
-        store.dispatch(setCurrentUser(this._auth.currentUser));
+        const user = await userService.getUser(this._auth.currentUser.uid);
+
+        store.dispatch(setCurrentUser(user));
 
         router('/');
       } else {
@@ -52,6 +60,8 @@ class Authentication {
           break;
 
         default:
+          console.error(e.code);
+
           store.dispatch(addNotification('Unknown error occurred'));
       }
     });
@@ -69,6 +79,21 @@ class Authentication {
       .withKey(userRef.user.uid)
       .withValues({ name })
       .execute();
+  }
+
+  async updatePassword(currentPassword, newPassword) {
+    const credential = firebase.auth.EmailAuthProvider.credential(this._auth.currentUser.email, currentPassword);
+
+    try {
+      await this._auth.currentUser.reauthenticateAndRetrieveDataWithCredential(credential);
+
+      await this._auth.currentUser.updatePassword(newPassword);
+
+      store.dispatch(clearModal());
+      store.dispatch(addNotification('Password successfully changed', false));
+    } catch (e) {
+      store.dispatch(addNotification(e.message));
+    }
   }
 }
 

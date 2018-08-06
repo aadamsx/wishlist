@@ -1,8 +1,8 @@
 import '../base/button/wl-button.js';
 import { buyItem, deleteItem, unbuyItem } from '../../actions/itemList.js';
 import { html, LitElement } from '@polymer/lit-element';
-import { openItemForm } from '../../actions/itemFormState.js';
 import { setCurrentItem } from '../../actions/currentItem.js';
+import { showItemFormModal } from '../../modals.js';
 import store from '../../store.js';
 
 class WLItemListItem extends LitElement {
@@ -77,7 +77,8 @@ class WLItemListItem extends LitElement {
 
   editHandler() {
     store.dispatch(setCurrentItem(this.item));
-    store.dispatch(openItemForm());
+
+    showItemFormModal();
   }
 
   unbuyHandler() {

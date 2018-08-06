@@ -1,4 +1,5 @@
 import { SET_SELECTED_USER } from '../actions/selectedUser.js';
+import createReducer from '../utils/createReducer.js';
 
 const INITIAL_STATE = {};
 
@@ -6,8 +7,6 @@ const reducers = {
   [SET_SELECTED_USER]: (state, { id }) => ({ id }),
 };
 
-const userReducer = (state = INITIAL_STATE, action) => (
-  reducers[action.type] ? reducers[action.type](state, action) : state
-);
+const selectedUserReducer = createReducer(reducers, INITIAL_STATE);
 
-export default userReducer;
+export default selectedUserReducer;

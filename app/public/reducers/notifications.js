@@ -1,4 +1,5 @@
 import { ADD_NOTIFICATION, CLEAR_ALL_NOTIFICATIONS, REMOVE_NOTIFICATION } from '../actions/notifications.js';
+import createReducer from '../utils/createReducer.js';
 
 const INITIAL_STATE = [];
 
@@ -19,8 +20,6 @@ const reducers = {
   [REMOVE_NOTIFICATION]: (state, { key }) => state.filter(n => n.key !== key),
 };
 
-const notificationReducer = (state = INITIAL_STATE, action) => (
-  reducers[action.type] ? reducers[action.type](state, action) : state
-);
+const notificationReducer = createReducer(reducers, INITIAL_STATE);
 
 export default notificationReducer;

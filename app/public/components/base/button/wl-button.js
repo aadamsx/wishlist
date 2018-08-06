@@ -6,7 +6,8 @@ class WLButton extends LitElement {
 
   static get properties() {
     return {
-      purpose: String,
+      primary: Boolean,
+      secondary: Boolean,
     };
   }
 
@@ -22,7 +23,7 @@ class WLButton extends LitElement {
           --button-primary__background-color--active: #00897b;
           --button-primary__color: #fafafa;
 
-          display: content;
+          display: contents;
         }
 
         button {
@@ -59,16 +60,27 @@ class WLButton extends LitElement {
         .primary:active {
           background-color: var(--button-primary__background-color--active);
         }
+
+        /* .secondary {
+          background-color: var(--button-primary__background-color);
+          border-color: var(--button-primary__background-color);
+          color: var(--button-primary__color);
+        }
+
+        .secondary:focus,
+        .secondary:hover {
+          background-color: var(--button-primary__background-color--hover);
+        }
+
+        .secondary:active {
+          background-color: var(--button-primary__background-color--active);
+        } */
       </style>
     `;
   }
 
-  _render({ purpose }) {
-    const classes = classNames({
-      default: !purpose || purpose === 'default',
-      primary: purpose === 'primary',
-      secondary: purpose === 'secondary',
-    });
+  _render({ primary, secondary }) {
+    const classes = classNames({ primary, secondary });
 
     return html`
       ${WLButton.styles}

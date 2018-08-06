@@ -1,5 +1,5 @@
 import { clearCurrentItem } from './currentItem.js';
-import { closeItemForm } from './itemFormState.js';
+import { clearModal } from './modal.js';
 import itemService from '../services/itemService.js';
 
 /* --------------------- */
@@ -34,7 +34,7 @@ const addItem = (name, price, url, category) => async (dispatch, getState) => {
       itemList[item.id] = item;
 
       dispatch(setItems(itemList));
-      dispatch(closeItemForm());
+      dispatch(clearModal());
     }
   } catch (e) {
     console.error(e);
@@ -116,7 +116,7 @@ const updateItem = (id, name, price, url, category) => async (dispatch, getState
       itemList[item.id] = item;
 
       dispatch(setItems(itemList));
-      dispatch(closeItemForm());
+      dispatch(clearModal());
       dispatch(clearCurrentItem());
     }
   } catch (e) {

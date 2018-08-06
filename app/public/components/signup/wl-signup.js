@@ -40,7 +40,7 @@ class WLSignUp extends LitElement {
         <input id="confirm" type="password">
 
         <div class="actions">
-          <wl-button on-click="${e => this._submitHandler(e)}" purpose="primary">Submit</wl-button>
+          <wl-button on-click="${e => this._submitHandler(e)}" primary>Submit</wl-button>
         </div>
       </form>
     `;

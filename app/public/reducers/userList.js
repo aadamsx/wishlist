@@ -1,4 +1,5 @@
 import { CLEAR_USER_LIST, SET_USER_LIST } from '../actions/userList.js';
+import createReducer from '../utils/createReducer.js';
 
 const INITIAL_STATE = {};
 
@@ -7,8 +8,6 @@ const reducers = {
   [SET_USER_LIST]: (state, { userList }) => Object.assign({}, userList),
 };
 
-const userListReducer = (state = INITIAL_STATE, action) => (
-  reducers[action.type] ? reducers[action.type](state, action) : state
-);
+const userListReducer = createReducer(reducers, INITIAL_STATE);
 
 export default userListReducer;

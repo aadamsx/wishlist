@@ -12,7 +12,7 @@ class WLMainApp extends connect(store)(LitElement) {
   static get properties() {
     return {
       _currentItem: Object,
-      _isFormOpen: Object,
+      _modal: Object,
       _notifications: Array,
       _page: Object,
     };
@@ -38,7 +38,13 @@ class WLMainApp extends connect(store)(LitElement) {
     `;
   }
 
-  _render({ _currentItem, _isFormOpen, _notifications, _page }) {
+  constructor() {
+    super();
+
+    this._modal = {};
+  }
+
+  _render({ _modal, _notifications, _page }) {
     return html`
       ${WLMainApp.styles}
 
@@ -47,8 +53,8 @@ class WLMainApp extends connect(store)(LitElement) {
         ${_page}
       </wl-app-layout>
 
-      <wl-modal active?="${_isFormOpen}">
-        <wl-item-form item=${_currentItem}></wl-item-form>
+      <wl-modal active?="${_modal.isVisible}">
+        ${_modal.template}
       </wl-modal>
 
       <wl-notifications notifications="${_notifications}"></wl-notifications>
@@ -59,7 +65,7 @@ class WLMainApp extends connect(store)(LitElement) {
     if (!state.page) return;
 
     this._currentItem = state.currentItem;
-    this._isFormOpen = state.itemFormState;
+    this._modal = state.modal;
     this._notifications = state.notifications;
     this._page = state.page;
   }

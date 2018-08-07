@@ -7,8 +7,10 @@ import './components/user-list/wl-user-list.js';
 import { clearItemList, loadItemList } from './actions/itemList.js';
 import { clearUserList, loadUserList } from './actions/userList.js';
 import { html } from '@polymer/lit-element';
+import { setHeaderState } from './actions/headerState.js';
 import { setPage } from './actions/page.js';
 import { setSelectedUser } from './actions/selectedUser.js';
+import HeaderState from './utils/HeaderState.js';
 import store from './store.js';
 
 const homeTpl = html`
@@ -34,6 +36,7 @@ const loginPage = () => {
   store.dispatch(setPage(loginTpl));
   store.dispatch(clearItemList());
   store.dispatch(clearUserList());
+  store.dispatch(setHeaderState(HeaderState.LOGIN));
 };
 
 const unknownPage = () => {
@@ -44,16 +47,19 @@ const unknownPage = () => {
   `;
 
   store.dispatch(setPage(template));
+  store.dispatch(setHeaderState(HeaderState.UNKNOWN));
 };
 
 const signUpPage = () => {
   store.dispatch(setPage(signUpTpl));
+  store.dispatch(setHeaderState(HeaderState.SIGN_UP));
 };
 
 const userPage = (ctx) => {
   store.dispatch(setPage(homeTpl));
   store.dispatch(loadUserList());
   store.dispatch(loadItemList(ctx.params.userId));
+  store.dispatch(setHeaderState(HeaderState.LOGGED_IN));
   store.dispatch(setSelectedUser(ctx.params.userId));
 };
 

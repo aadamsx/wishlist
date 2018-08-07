@@ -1,6 +1,7 @@
 import { connect } from 'pwa-helpers/connect-mixin.js';
 import { html, LitElement } from '@polymer/lit-element';
 import { showChangePasswordModal } from '../../modals.js';
+import HeaderState from '../../utils/HeaderState.js';
 import store from '../../store.js';
 
 class WLHeader extends connect(store)(LitElement) {
@@ -9,6 +10,7 @@ class WLHeader extends connect(store)(LitElement) {
   static get properties() {
     return {
       _currentUser: Object,
+      _headerState: String,
     };
   }
 
@@ -90,27 +92,42 @@ class WLHeader extends connect(store)(LitElement) {
 
   _stateChanged(state) {
     this._currentUser = state.currentUser;
+    this._headerState = state.headerState;
   }
 
   getActions() {
-    return this._currentUser.id
-      ? html`
-        <div>
-          <a class="pointer" on-click="${e => this.handleDropdownToggle(e)}">
-            ${this._currentUser.name} <span class="caret"></span>
-          </a>
+    switch (this._headerState) {
+      case HeaderState.LOGIN:
+        return html`
+          <small>
+            <a href="signup">Sign Up</a>
+          </small>
+        `;
 
-          <div id="dropdown" hidden>
-            <a class="pointer" on-click="${() => this.handleChangePasswordClick()}">Change Password</a>
-            <a href="logout">Logout</a>
-          </div>
-        </small>
-      `
-      : html`
-        <small>
-          <a href="signup">Sign Up</a>
-        </small>
-      `;
+      case HeaderState.SIGN_UP:
+        return html`
+          <small>
+            <a href="login">Log In</a>
+          </small>
+        `;
+
+      case HeaderState.LOGGED_IN:
+        return html`
+          <div>
+            <a class="pointer" on-click="${e => this.handleDropdownToggle(e)}">
+              ${this._currentUser.name} <span class="caret"></span>
+            </a>
+
+            <div id="dropdown" hidden>
+              <a class="pointer" on-click="${() => this.handleChangePasswordClick()}">Change Password</a>
+              <a href="logout">Logout</a>
+            </div>
+          </small>
+        `;
+
+      default:
+        return '';
+    }
   }
 
   handleChangePasswordClick() {

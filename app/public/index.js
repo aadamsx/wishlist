@@ -1,5 +1,5 @@
 import './components/main-app/wl-main-app.js';
-import { loginPage, signUpPage, unknownPage, userPage } from './page.js';
+import { loginPage, signUpPage, unknownPage, userPage } from './pages.js';
 import authentication from './services/authentication.js';
 import page from 'page';
 import store from './store.js';

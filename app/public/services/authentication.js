@@ -92,7 +92,15 @@ class Authentication {
       store.dispatch(clearModal());
       store.dispatch(addNotification('Password successfully changed', false));
     } catch (e) {
-      store.dispatch(addNotification(e.message));
+      switch (e.code) {
+        case 'auth/wrong-password':
+          store.dispatch(addNotification('Password is incorrect'));
+
+          return;
+
+        default:
+          store.dispatch(addNotification(e.message));
+      }
     }
   }
 }

@@ -65,6 +65,7 @@ class WLPasswordForm extends LitElement {
     this.$current.focus();
   }
 
+  /* -- Event Handlers -- */
   handleCancelClick() {
     store.dispatch(clearModal());
   }
@@ -76,6 +77,8 @@ class WLPasswordForm extends LitElement {
 
     if (newPassword !== confirmPassword) {
       store.dispatch(addNotification('Passwords must match'));
+
+      return;
     }
 
     authentication.updatePassword(currentPassword, newPassword);

@@ -1,6 +1,7 @@
 import { addNotification } from '../actions/notifications.js';
 import { clearCurrentUser, setCurrentUser } from '../actions/currentUser.js';
 import { clearModal } from '../actions/modal.js';
+import { hideSpinner, showSpinner } from '../actions/spinner.js';
 import database from '../database/database.js';
 import firebase from '../database/firebase.js';
 import store from '../store.js';
@@ -51,11 +52,14 @@ class Authentication {
   }
 
   logInWithEmail(email, password) {
+    store.dispatch(showSpinner());
+
     this._auth.signInWithEmailAndPassword(email, password).catch((e) => {
       switch (e.code) {
         case 'auth/invalid-email':
         case 'auth/wrong-password':
           store.dispatch(addNotification('Invalid username/password'));
+          store.dispatch(hideSpinner());
 
           break;
 
@@ -72,6 +76,8 @@ class Authentication {
   }
 
   async signUp(name, email, password) {
+    store.dispatch(showSpinner());
+
     const userRef = await this._auth.createUserWithEmailAndPassword(email, password);
 
     database
@@ -79,9 +85,13 @@ class Authentication {
       .withKey(userRef.user.uid)
       .withValues({ name })
       .execute();
+
+    store.dispatch(hideSpinner());
   }
 
   async updatePassword(currentPassword, newPassword) {
+    store.dispatch(showSpinner());
+
     const credential = firebase.auth.EmailAuthProvider.credential(this._auth.currentUser.email, currentPassword);
 
     try {
@@ -91,6 +101,7 @@ class Authentication {
 
       store.dispatch(clearModal());
       store.dispatch(addNotification('Password successfully changed', false));
+      store.dispatch(hideSpinner());
     } catch (e) {
       switch (e.code) {
         case 'auth/wrong-password':

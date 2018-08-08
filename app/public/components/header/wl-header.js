@@ -1,3 +1,4 @@
+import '../spinner/wl-spinner.js';
 import { connect } from 'pwa-helpers/connect-mixin.js';
 import { html, LitElement } from '@polymer/lit-element';
 import { showChangePasswordModal } from '../../modals.js';
@@ -11,6 +12,7 @@ class WLHeader extends connect(store)(LitElement) {
     return {
       _currentUser: Object,
       _headerState: String,
+      _isSpinnerVisible: Boolean,
     };
   }
 
@@ -33,6 +35,10 @@ class WLHeader extends connect(store)(LitElement) {
         a {
           color: inherit;
           text-decoration: none;
+        }
+
+        wl-spinner {
+          margin-left: 10px;
         }
 
         #dropdown {
@@ -67,6 +73,12 @@ class WLHeader extends connect(store)(LitElement) {
         .pointer {
           cursor: pointer;
         }
+
+        .title {
+          align-items: center;
+          display: flex;
+          font-size: 2rem;
+        }
       </style>
     `;
   }
@@ -77,6 +89,7 @@ class WLHeader extends connect(store)(LitElement) {
     super();
 
     this._currentUser = {};
+    this._isSpinnerVisible = true;
   }
 
   _render() {
@@ -85,7 +98,11 @@ class WLHeader extends connect(store)(LitElement) {
     return html`
       ${WLHeader.styles}
 
-      <a href="">Wishlist</a>
+      <div class="title">
+        <a href="">Wishlist</a>
+        <wl-spinner hidden?="${!this._isSpinnerVisible}"></wl-spinner>
+      </div>
+
       ${actions}
     `;
   }
@@ -93,6 +110,7 @@ class WLHeader extends connect(store)(LitElement) {
   _stateChanged(state) {
     this._currentUser = state.currentUser;
     this._headerState = state.headerState;
+    this._isSpinnerVisible = state.isSpinnerVisible;
   }
 
   getActions() {

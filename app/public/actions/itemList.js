@@ -1,5 +1,6 @@
 import { clearCurrentItem } from './currentItem.js';
 import { clearModal } from './modal.js';
+import { hideSpinner, showSpinner } from './spinner.js';
 import itemService from '../services/itemService.js';
 
 /* --------------------- */
@@ -17,6 +18,8 @@ const setItems = itemList => ({ itemList, type: SET_ITEMS });
 /* -- API Actions -- */
 /* ----------------- */
 const addItem = (name, price, url, category) => async (dispatch, getState) => {
+  dispatch(showSpinner());
+
   const { currentUser, itemList, selectedUser } = getState();
 
   try {
@@ -35,6 +38,7 @@ const addItem = (name, price, url, category) => async (dispatch, getState) => {
 
       dispatch(setItems(itemList));
       dispatch(clearModal());
+      dispatch(hideSpinner());
     }
   } catch (e) {
     console.error(e);
@@ -42,6 +46,8 @@ const addItem = (name, price, url, category) => async (dispatch, getState) => {
 };
 
 const buyItem = id => async (dispatch, getState) => {
+  dispatch(showSpinner());
+
   const { currentUser, itemList } = getState();
 
   try {
@@ -50,22 +56,27 @@ const buyItem = id => async (dispatch, getState) => {
     itemList[id] = newItem;
 
     dispatch(setItems(itemList));
+    dispatch(hideSpinner());
   } catch (e) {
     console.error(e);
   }
 };
 
 const deleteItem = id => async (dispatch) => {
+  dispatch(showSpinner());
+
   try {
     await itemService.deleteItem(id);
 
     dispatch(removeItem(id));
+    dispatch(hideSpinner());
   } catch (e) {
     console.error(e);
   }
 };
 
 const loadItemList = userId => async (dispatch, getState) => {
+  dispatch(showSpinner());
   dispatch(clearItemList());
 
   const { currentUser } = getState();
@@ -80,12 +91,15 @@ const loadItemList = userId => async (dispatch, getState) => {
     }
 
     dispatch(setItems(itemList));
+    dispatch(hideSpinner());
   } catch (e) {
     console.error(e);
   }
 };
 
 const unbuyItem = id => async (dispatch, getState) => {
+  dispatch(showSpinner());
+
   const { currentUser, itemList } = getState();
 
   try {
@@ -94,12 +108,15 @@ const unbuyItem = id => async (dispatch, getState) => {
     itemList[id] = newItem;
 
     dispatch(setItems(itemList));
+    dispatch(hideSpinner());
   } catch (e) {
     console.error(e);
   }
 };
 
 const updateItem = (id, name, price, url, category) => async (dispatch, getState) => {
+  dispatch(showSpinner());
+
   const { currentUser, itemList, selectedUser } = getState();
 
   try {
@@ -118,6 +135,7 @@ const updateItem = (id, name, price, url, category) => async (dispatch, getState
       dispatch(setItems(itemList));
       dispatch(clearModal());
       dispatch(clearCurrentItem());
+      dispatch(hideSpinner());
     }
   } catch (e) {
     console.error(e);

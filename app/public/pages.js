@@ -6,6 +6,7 @@ import './components/signup/wl-signup.js';
 import './components/user-list/wl-user-list.js';
 import { clearItemList, loadItemList } from './actions/itemList.js';
 import { clearUserList, loadUserList } from './actions/userList.js';
+import { hideSpinner } from './actions/spinner.js';
 import { html } from '@polymer/lit-element';
 import { setHeaderState } from './actions/headerState.js';
 import { setPage } from './actions/page.js';
@@ -37,6 +38,7 @@ const loginPage = () => {
   store.dispatch(clearItemList());
   store.dispatch(clearUserList());
   store.dispatch(setHeaderState(HeaderState.LOGIN));
+  store.dispatch(hideSpinner());
 };
 
 const unknownPage = () => {
@@ -48,11 +50,13 @@ const unknownPage = () => {
 
   store.dispatch(setPage(template));
   store.dispatch(setHeaderState(HeaderState.UNKNOWN));
+  store.dispatch(hideSpinner());
 };
 
 const signUpPage = () => {
   store.dispatch(setPage(signUpTpl));
   store.dispatch(setHeaderState(HeaderState.SIGN_UP));
+  store.dispatch(hideSpinner());
 };
 
 const userPage = (ctx) => {

@@ -1,5 +1,6 @@
 import './components/main-app/wl-main-app.js';
-import 'bootstrap/dist/css/bootstrap-reboot.min.css';
+import { addNotification } from './actions/notifications.js';
+import { installOfflineWatcher } from 'pwa-helpers';
 import { loginPage, signUpPage, unknownPage, userPage } from './pages.js';
 import authentication from './services/authentication.js';
 import page from 'page';
@@ -37,5 +38,11 @@ page('/logout', () => authentication.logOut());
 page('/signup', isLoggedOut, signUpPage);
 page('/users/:userId', isLoggedIn, userPage);
 page('*', unknownPage);
+
+installOfflineWatcher((isOffline) => {
+  if (isOffline) {
+    store.dispatch(addNotification('No Connection. Functionality is limited'));
+  }
+});
 
 authentication.start(page);

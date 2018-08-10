@@ -28,7 +28,7 @@ class WLButton extends LitElement {
 
         button {
           background-color: var(--button__background-color);
-          border-radius: 4px;
+          border-radius: calc(1.75rem / 2);
           border: 1px solid #dddddd;
           height: 1.75rem;
           line-height: 1.75rem;

@@ -1,24 +1,11 @@
 const { GenerateSW } = require('workbox-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const firebaseConfig = require('./firebase.config.js');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   entry: {
     main: './public/index.js',
-  },
-
-  module: {
-    rules: [
-      {
-        test: /\.css$/,
-
-        use: [
-          MiniCssExtractPlugin.loader,
-          'css-loader',
-        ],
-      },
-    ],
   },
 
   output: {
@@ -28,8 +15,6 @@ module.exports = {
 
   // Order matters
   plugins: [
-    new MiniCssExtractPlugin(),
-
     new HtmlWebpackPlugin({
       minify: true,
       template: './public/index.html',
@@ -43,5 +28,11 @@ module.exports = {
       skipWaiting: true,
       swDest: 'sw.js',
     }),
+
+    new CopyWebpackPlugin([
+      { from: 'node_modules/bootstrap/dist/css/bootstrap-reboot.min.css', to: './', flatten: true },
+      { from: 'public/images/*', to: 'images/', flatten: true },
+      { from: 'public/manifest.json', to: './', flatten: true },
+    ]),
   ],
 };

@@ -1,7 +1,10 @@
 {
-  "workspaces": [
-    "app"
-  ],
+  "workspaces": {
+    "packages": ["app"],
+    "nohoist": [
+      "**"
+    ]
+  },
   "private": true,
   "scripts": {
     "deploy": "npm-run-all -s deploy:*",

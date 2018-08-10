@@ -1,0 +1,23 @@
+{
+  "background_color": "#26a69a",
+  "display": "standalone",
+
+  "icons": [
+    {
+      "src": "images/icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "images/icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+
+  "name": "Wishlist App",
+  "scope": "/",
+  "short_name": "Wishlist",
+  "start_url": "/?source=pwa",
+  "theme_color": "#26a69a"
+}

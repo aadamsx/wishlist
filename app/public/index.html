@@ -9,10 +9,14 @@
 
   <title>Wishlist</title>
 
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap-reboot.min.css" crossorigin="anonymous">
-
   <script>
     window.firebaseSettings = <%= htmlWebpackPlugin.options.firebaseConfig %>;
+
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('/sw.js');
+      });
+    }
   </script>
 </head>
 

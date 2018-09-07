@@ -19,7 +19,7 @@ class WLSinglePane extends LitElement {
     `;
   }
 
-  _render() {
+  render() {
     return html`
       ${WLSinglePane.styles}
 

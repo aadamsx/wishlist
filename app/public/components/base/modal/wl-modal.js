@@ -5,7 +5,7 @@ class WLModal extends LitElement {
 
   static get properties() {
     return {
-      active: Boolean,
+      active: { type: Boolean },
     };
   }
 
@@ -48,8 +48,8 @@ class WLModal extends LitElement {
     `;
   }
 
-  _render({ active }) {
-    if (!active) return html``;
+  render() {
+    if (!this.active) return html``;
 
     return html`
       ${WLModal.styles}

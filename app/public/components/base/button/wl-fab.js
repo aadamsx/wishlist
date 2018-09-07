@@ -18,10 +18,12 @@ class WLFab extends LitElement {
         button {
           background-color: var(--button__background-color);
           border-radius: 2rem;
-          border: 1px solid #dddddd;
+          border: none;
+          box-shadow: 0 4px 12px 0 #989898;
           color: var(--button__color);
           font-size: 2.5rem;
           height: 4rem;
+          transition: background-color .2s;
           width: 4rem;
         }
 
@@ -39,7 +41,7 @@ class WLFab extends LitElement {
     `;
   }
 
-  _render() {
+  render() {
     return html`
       ${WLFab.styles}
       <button>

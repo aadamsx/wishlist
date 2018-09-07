@@ -16,35 +16,35 @@ class WlLogin extends LitElement {
     `;
   }
 
-  _render() {
+  render() {
     return html`
       ${formStyles}
       ${WlLogin.styles}
 
       <h2>Login</h2>
 
-      <form on-submit="${e => this._submitHandler(e)}">
+      <form @submit="${e => this._submitHandler(e)}">
         <label class="required" for="email">Email</label>
         <input id="email" type="email">
         <label class="required" for="password">Password</label>
         <input id="password" type="password">
 
         <div class="actions">
-          <wl-button on-click="${e => this._submitHandler(e)}" primary>Submit</wl-button>
+          <wl-button @click="${e => this._submitHandler(e)}" primary>Submit</wl-button>
         </div>
       </form>
     `;
   }
 
-  _didRender() {
-    this._root.getElementById('email').focus();
+  firstUpdated() {
+    this.renderRoot.getElementById('email').focus();
   }
 
   _submitHandler(e) {
     e.preventDefault();
 
-    const email = this._root.getElementById('email').value;
-    const password = this._root.getElementById('password').value;
+    const email = this.renderRoot.getElementById('email').value;
+    const password = this.renderRoot.getElementById('password').value;
 
     authentication.logInWithEmail(email, password);
   }

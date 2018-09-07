@@ -1,7 +1,7 @@
 import './wl-item-list-item.js';
 import { connect } from 'pwa-helpers/connect-mixin.js';
 import { html, LitElement } from '@polymer/lit-element';
-import { repeat } from 'lit-html/lib/repeat.js';
+import { repeat } from 'lit-html/directives/repeat.js';
 import ListCategories from '../../utils/ListCategories.js';
 import store from '../../store.js';
 
@@ -10,7 +10,7 @@ class WLItemList extends connect(store)(LitElement) {
 
   static get properties() {
     return {
-      _itemList: Object,
+      _itemList: { type: Object },
     };
   }
 
@@ -31,8 +31,8 @@ class WLItemList extends connect(store)(LitElement) {
     `;
   }
 
-  _render({ _itemList }) {
-    const categories = this.filterItemsIntoCategories(_itemList);
+  render() {
+    const categories = this.filterItemsIntoCategories(this._itemList);
 
     const likeList = this.constructItemList(categories.likes);
     const needList = this.constructItemList(categories.needs);
@@ -62,7 +62,7 @@ class WLItemList extends connect(store)(LitElement) {
       ([k, v]) => {
         const item = Object.assign({ id: k }, v);
 
-        return html`<wl-item-list-item item=${item}></wl-item-list-item>`;
+        return html`<wl-item-list-item .item=${item}></wl-item-list-item>`;
       },
     );
   }

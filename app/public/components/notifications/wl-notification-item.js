@@ -8,9 +8,9 @@ class WLNotificationItem extends LitElement {
 
   static get properties() {
     return {
-      isError: Boolean,
-      key: String,
-      text: String,
+      isError: { type: Boolean },
+      key: { type: String },
+      text: { type: String },
     };
   }
 
@@ -85,25 +85,25 @@ class WLNotificationItem extends LitElement {
     `;
   }
 
-  _render({ isError, text }) {
+  render() {
     const classes = classNames({
-      error: isError,
+      error: this.isError,
     });
 
     return html`
       ${WLNotificationItem.styles}
 
-      <div class$="${classes}">
-        ${text}
+      <div class="${classes}">
+        ${this.text}
 
-        <button on-click="${e => this.removeHandler(e)}">&times;</button>
+        <button @click="${e => this.removeHandler(e)}">&times;</button>
       </div>
     `;
   }
 
-  _firstRendered() {
+  firstUpdated() {
     setTimeout(() => {
-      this._root.querySelector('div').classList.add('active');
+      this.renderRoot.querySelector('div').classList.add('active');
     }, 0);
 
     setTimeout(() => this.removeSelf(), 3500);
@@ -116,8 +116,8 @@ class WLNotificationItem extends LitElement {
   }
 
   removeSelf() {
-    this._root.querySelector('div').classList.remove('active');
-    this._root.querySelector('div').classList.add('removing');
+    this.renderRoot.querySelector('div').classList.remove('active');
+    this.renderRoot.querySelector('div').classList.add('removing');
 
     setTimeout(() => {
       store.dispatch(removeNotification(this.key));

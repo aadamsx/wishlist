@@ -25,7 +25,7 @@ class WLDoublePane extends LitElement {
     `;
   }
 
-  _render() {
+  render() {
     return html`
       ${WLDoublePane.styles}
 

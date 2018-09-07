@@ -22,14 +22,21 @@ class WLSignUp extends LitElement {
     `;
   }
 
-  _render() {
+  /* eslint-disable lines-between-class-members */
+  get $confirm() { return this.renderRoot.getElementById('confirm'); }
+  get $email() { return this.renderRoot.getElementById('email'); }
+  get $name() { return this.renderRoot.getElementById('name'); }
+  get $password() { return this.renderRoot.getElementById('password'); }
+  /* eslint-enable */
+
+  render() {
     return html`
       ${formStyles}
       ${WLSignUp.styles}
 
       <h2>Sign Up</h2>
 
-      <form on-submit="${e => this._submitHandler(e)}">
+      <form @submit="${e => this._submitHandler(e)}">
         <label class="required" for="name">Name</label>
         <input id="name" type="text">
         <label class="required" for="email">Email</label>
@@ -40,23 +47,23 @@ class WLSignUp extends LitElement {
         <input id="confirm" type="password">
 
         <div class="actions">
-          <wl-button on-click="${e => this._submitHandler(e)}" primary>Submit</wl-button>
+          <wl-button @click="${e => this._submitHandler(e)}" primary>Submit</wl-button>
         </div>
       </form>
     `;
   }
 
-  _didRender() {
-    this._root.getElementById('name').focus();
+  firstUpdated() {
+    this.$name.focus();
   }
 
   _submitHandler(e) {
     e.preventDefault();
 
-    const confirm = this._root.getElementById('confirm').value;
-    const email = this._root.getElementById('email').value;
-    const name = this._root.getElementById('name').value;
-    const password = this._root.getElementById('password').value;
+    const confirm = this.$confirm.value;
+    const email = this.$email.value;
+    const name = this.$name.value;
+    const password = this.$password.value;
 
     if (this.isInvalid(name, email, password, confirm)) return;
 

@@ -6,8 +6,8 @@ class WLButton extends LitElement {
 
   static get properties() {
     return {
-      primary: Boolean,
-      secondary: Boolean,
+      primary: { type: Boolean },
+      secondary: { type: Boolean },
     };
   }
 
@@ -79,12 +79,15 @@ class WLButton extends LitElement {
     `;
   }
 
-  _render({ primary, secondary }) {
-    const classes = classNames({ primary, secondary });
+  render() {
+    const classes = classNames({
+      primary: this.primary,
+      secondary: this.secondary,
+    });
 
     return html`
       ${WLButton.styles}
-      <button class$=${classes}>
+      <button class="${classes}">
         <slot></slot>
       </button>
     `;

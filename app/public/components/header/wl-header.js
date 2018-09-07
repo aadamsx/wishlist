@@ -10,9 +10,9 @@ class WLHeader extends connect(store)(LitElement) {
 
   static get properties() {
     return {
-      _currentUser: Object,
-      _headerState: String,
-      _isSpinnerVisible: Boolean,
+      _currentUser: { type: Object },
+      _headerState: { type: String },
+      _isSpinnerVisible: { type: Boolean },
     };
   }
 
@@ -83,7 +83,7 @@ class WLHeader extends connect(store)(LitElement) {
     `;
   }
 
-  get $dropdown() { return this._root.getElementById('dropdown'); }
+  get $dropdown() { return this.renderRoot.getElementById('dropdown'); }
 
   constructor() {
     super();
@@ -92,7 +92,7 @@ class WLHeader extends connect(store)(LitElement) {
     this._isSpinnerVisible = true;
   }
 
-  _render() {
+  render() {
     const actions = this.getActions();
 
     return html`
@@ -100,7 +100,7 @@ class WLHeader extends connect(store)(LitElement) {
 
       <div class="title">
         <a href="">Wishlist</a>
-        <wl-spinner hidden?="${!this._isSpinnerVisible}"></wl-spinner>
+        <wl-spinner ?hidden="${!this._isSpinnerVisible}"></wl-spinner>
       </div>
 
       ${actions}
@@ -132,12 +132,12 @@ class WLHeader extends connect(store)(LitElement) {
       case HeaderState.LOGGED_IN:
         return html`
           <div>
-            <a class="pointer" on-click="${e => this.handleDropdownToggle(e)}">
+            <a class="pointer" @click="${e => this.handleDropdownToggle(e)}">
               ${this._currentUser.name} <span class="caret"></span>
             </a>
 
             <div id="dropdown" hidden>
-              <a class="pointer" on-click="${() => this.handleChangePasswordClick()}">Change Password</a>
+              <a class="pointer" @click="${() => this.handleChangePasswordClick()}">Change Password</a>
               <a href="logout">Logout</a>
             </div>
           </small>

@@ -15,7 +15,7 @@ class WLAppLayout extends LitElement {
     `;
   }
 
-  _render() {
+  render() {
     return html`
       ${WLAppLayout.styles}
       <slot></slot>

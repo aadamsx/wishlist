@@ -12,7 +12,7 @@ class WLItemListItem extends LitElement {
 
   static get properties() {
     return {
-      item: Object,
+      item: { type: Object },
     };
   }
 
@@ -38,21 +38,21 @@ class WLItemListItem extends LitElement {
     `;
   }
 
-  _render({ item }) {
-    if (!item) return html``;
+  render() {
+    // if (!this.item) return html``;
 
     const actions = this.getActions();
-    const classes = item.isBought ? 'bought' : '';
+    const classes = this.item.isBought ? 'bought' : '';
 
-    const name = item.url
+    const name = this.item.url
       ? html`
-        <div class$="${classes}">
-          <a href=${item.url} rel="noopener" target="_blank">${item.name}</a> ($${item.price})
+        <div class="${classes}">
+          <a href="${this.item.url}" rel="noopener" target="_blank">${this.item.name}</a> ($${this.item.price})
         </div>
       `
       : html`
-        <div class$="${classes}">
-          ${item.name} ($${item.price})
+        <div class="${classes}">
+          ${this.item.name} ($${this.item.price})
         </div>
       `;
 
@@ -92,20 +92,20 @@ class WLItemListItem extends LitElement {
     switch (this.item.isBought) {
       case undefined:
         return html`
-          <wl-button on-click="${e => this.editHandler(e)}">Edit</wl-button>
-          <wl-button on-click="${e => this.deleteHandler(e)}">Delete</wl-button>
+          <wl-button @click="${e => this.editHandler(e)}">Edit</wl-button>
+          <wl-button @click="${e => this.deleteHandler(e)}">Delete</wl-button>
         `;
 
       case true:
         return this.item.buyerId === currentUser.id
           ? html`
-            <wl-button on-click="${() => this.unbuyHandler()}">Un-Buy</wl-button>
+            <wl-button @click="${() => this.unbuyHandler()}">Un-Buy</wl-button>
           `
           : html``;
 
       case false:
         return html`
-          <wl-button on-click="${() => this.buyHandler()}">Buy</wl-button>
+          <wl-button @click="${() => this.buyHandler()}">Buy</wl-button>
         `;
 
       default:

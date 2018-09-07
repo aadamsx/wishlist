@@ -9,10 +9,6 @@ import store from '../../store.js';
 class WLPasswordForm extends LitElement {
   static get is() { return 'wl-password-form'; }
 
-  static get properties() {
-    return {};
-  }
-
   static get styles() {
     return html`
       <style>
@@ -24,20 +20,20 @@ class WLPasswordForm extends LitElement {
     `;
   }
 
-  get $confirm() { return this._root.querySelector('#confirm'); }
+  get $confirm() { return this.renderRoot.querySelector('#confirm'); }
 
-  get $current() { return this._root.querySelector('#current'); }
+  get $current() { return this.renderRoot.querySelector('#current'); }
 
-  get $new() { return this._root.querySelector('#new'); }
+  get $new() { return this.renderRoot.querySelector('#new'); }
 
-  _render() {
+  render() {
     return html`
       ${formStyles}
       ${WLPasswordForm.styles}
 
       <h2>Change Password</h2>
 
-      <form on-submit="${() => this.handleFormSubmit()}">
+      <form @submit="${() => this.handleFormSubmit()}">
         <label class="required" for="current">Current Password</label>
         <input id="current" type="password" required>
 
@@ -48,20 +44,14 @@ class WLPasswordForm extends LitElement {
         <input id="confirm" type="password" required>
 
         <div class="actions">
-          <wl-button on-click="${() => this.handleFormSubmit()}" primary>Submit</wl-button>
-          <wl-button on-click="${() => this.handleCancelClick()}">Cancel</wl-button>
+          <wl-button @click="${() => this.handleFormSubmit()}" primary>Submit</wl-button>
+          <wl-button @click="${() => this.handleCancelClick()}">Cancel</wl-button>
         </div>
       </form>
     `;
   }
 
-  // HACK: _didRender() seems to run before the element is actually in the DOM, so `focus` doesn't
-  // work unless we re-render
-  _firstRendered() {
-    this.requestRender();
-  }
-
-  _didRender() {
+  firstUpdated() {
     this.$current.focus();
   }
 

@@ -3,10 +3,6 @@ import { html, LitElement } from '@polymer/lit-element';
 class WLSpinner extends LitElement {
   static get is() { return 'wl-spinner'; }
 
-  static get properties() {
-    return {};
-  }
-
   static get styles() {
     return html`
       <style>
@@ -65,7 +61,7 @@ class WLSpinner extends LitElement {
     `;
   }
 
-  _render() {
+  render() {
     return html`
       ${WLSpinner.styles}
 

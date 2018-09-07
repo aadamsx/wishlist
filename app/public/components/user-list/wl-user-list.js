@@ -2,7 +2,7 @@ import '../base/button/wl-button.js';
 import '../base/button/wl-fab.js';
 import { connect } from 'pwa-helpers/connect-mixin.js';
 import { html, LitElement } from '@polymer/lit-element';
-import { repeat } from 'lit-html/lib/repeat.js';
+import { repeat } from 'lit-html/directives/repeat.js';
 import { showItemFormModal } from '../../modals.js';
 import classNames from 'classnames';
 import store from '../../store.js';
@@ -12,7 +12,7 @@ class WLUserList extends connect(store)(LitElement) {
 
   static get properties() {
     return {
-      _userList: Object,
+      _userList: { type: Object },
     };
   }
 
@@ -105,9 +105,9 @@ class WLUserList extends connect(store)(LitElement) {
     this._userList = {};
   }
 
-  _render({ _userList }) {
+  render() {
     const userList = repeat(
-      Object.entries(_userList),
+      Object.entries(this._userList),
       ([k]) => k,
       ([k, v]) => {
         const classes = classNames('user', {
@@ -115,7 +115,7 @@ class WLUserList extends connect(store)(LitElement) {
         });
 
         return html`
-          <a class$="${classes}" href="/users/${k}">${v.name}</a>
+          <a class="${classes}" href="/users/${k}">${v.name}</a>
         `;
       },
     );
@@ -128,20 +128,20 @@ class WLUserList extends connect(store)(LitElement) {
       ${WLUserList.styles}
 
       <div class="container">
-        <a class$="${currentUserClasses}" href="/users/${this.__currentUser}">Myself</a>
+        <a class="${currentUserClasses}" href="/users/${this.__currentUser}">Myself</a>
       </div>
 
-      <div class="container" on-keydown=${e => this.keyDownHandler(e)}>
-        <div class="search" tabindex="-1" on-focus=${() => this._root.getElementById('search').focus()}>
-          <input id="search" placeholder="Search..." type="text" on-keyup=${e => this.searchHandler(e)}>
+      <div class="container" @keydown="${e => this.keyDownHandler(e)}">
+        <div class="search" tabindex="-1" @focus="${() => this.renderRoot.getElementById('search').focus()}">
+          <input id="search" placeholder="Search..." type="text" @keyup="${e => this.searchHandler(e)}">
         </div>
 
         ${userList}
       </div>
 
       <wl-fab
-        class$="${isCurrentUserActive ? '' : 'hide'}"
-        on-click="${() => this.buttonHandler()}"
+        class="${isCurrentUserActive ? '' : 'hide'}"
+        @click="${() => this.buttonHandler()}"
       >+</wl-fab>
     `;
   }
@@ -155,9 +155,9 @@ class WLUserList extends connect(store)(LitElement) {
     // Don't show the current user in the user list
     delete this.__allUsers[this.__currentUser];
 
-    if (this._root) {
-      const searchEl = this._root.getElementById('search');
+    const searchEl = this.renderRoot.getElementById('search');
 
+    if (searchEl) {
       this._filterUsers(searchEl.value);
     }
   }

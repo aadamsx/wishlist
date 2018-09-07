@@ -13,7 +13,7 @@ class WLItemForm extends LitElement {
 
   static get properties() {
     return {
-      item: Object,
+      item: { type: Object },
     };
   }
 
@@ -27,13 +27,20 @@ class WLItemForm extends LitElement {
     `;
   }
 
+  /* eslint-disable lines-between-class-members */
+  get $category() { return this.renderRoot.getElementById('category'); }
+  get $name() { return this.renderRoot.getElementById('name'); }
+  get $price() { return this.renderRoot.getElementById('price'); }
+  get $url() { return this.renderRoot.getElementById('url'); }
+  /* eslint-enable */
+
   constructor() {
     super();
 
     this.item = {};
   }
 
-  _render() {
+  render() {
     const action = this.item.id ? 'Save' : 'Add';
     const category = this.item.category || ListCategories.WANT;
     const title = this.item.id ? 'Edit Item' : 'Add Item';
@@ -44,9 +51,9 @@ class WLItemForm extends LitElement {
 
       <h2>${title}</h2>
 
-      <form on-submit=${e => this.submitHandler(e)}>
+      <form @submit=${e => this.submitHandler(e)}>
         <label class="required" for="name">Name</label>
-        <input id="name" type="text" value=${this.item.name}>
+        <input id="name" type="text" value="${this.item.name || ''}">
 
         <label for="price">Price</label>
         <input id="price" type="number" value="${this.item.price}">
@@ -54,24 +61,24 @@ class WLItemForm extends LitElement {
         <label for="category">Category</label>
 
         <select id="category">
-          <option value="${ListCategories.NEED}" selected?="${category === ListCategories.NEED}">Need</option>
-          <option value="${ListCategories.WANT}" selected?="${category === ListCategories.WANT}">Want</option>
-          <option value="${ListCategories.LIKE}" selected?="${category === ListCategories.LIKE}">Like</option>
+          <option value="${ListCategories.NEED}" ?selected="${category === ListCategories.NEED}">Need</option>
+          <option value="${ListCategories.WANT}" ?selected="${category === ListCategories.WANT}">Want</option>
+          <option value="${ListCategories.LIKE}" ?selected="${category === ListCategories.LIKE}">Like</option>
         </select>
 
         <label for="url">Url</label>
-        <input id="url" type="text" value="${this.item.url}">
+        <input id="url" type="text" value="${this.item.url || ''}">
 
         <div class="actions">
-          <wl-button on-click="${e => this.submitHandler(e)}" primary>${action}</wl-button>
-          <wl-button on-click="${() => this.cancelHandler()}">Cancel</wl-button>
+          <wl-button @click="${e => this.submitHandler(e)}" primary>${action}</wl-button>
+          <wl-button @click="${() => this.cancelHandler()}">Cancel</wl-button>
         </div>
       </form>
     `;
   }
 
-  _didRender() {
-    this._root.querySelector('#name').focus();
+  firstUpdated() {
+    this.$name.focus();
   }
 
   cancelHandler() {
@@ -84,10 +91,10 @@ class WLItemForm extends LitElement {
 
     const isNew = !this.item.id;
 
-    const category = this._root.querySelector('#category').value;
-    const name = this._root.querySelector('#name').value;
-    const price = this._root.querySelector('#price').value;
-    const url = this._root.querySelector('#url').value;
+    const category = this.$category.value;
+    const name = this.$name.value;
+    const price = this.$price.value;
+    const url = this.$url.value;
 
     if (name.trim().length === 0) {
       store.dispatch(addNotification('Name must not be blank'));

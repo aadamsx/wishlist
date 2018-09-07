@@ -11,10 +11,10 @@ class WLMainApp extends connect(store)(LitElement) {
 
   static get properties() {
     return {
-      _currentItem: Object,
-      _modal: Object,
-      _notifications: Array,
-      _page: Object,
+      _currentItem: { type: Object },
+      _modal: { type: Object },
+      _notifications: { type: Array },
+      _page: { type: Object },
     };
   }
 
@@ -42,22 +42,23 @@ class WLMainApp extends connect(store)(LitElement) {
     super();
 
     this._modal = {};
+    this._notifications = [];
   }
 
-  _render({ _modal, _notifications, _page }) {
+  render() {
     return html`
       ${WLMainApp.styles}
 
       <wl-app-layout>
         <wl-header></wl-header>
-        ${_page}
+        ${this._page}
       </wl-app-layout>
 
-      <wl-modal active?="${_modal.isVisible}">
-        ${_modal.template}
+      <wl-modal ?active="${this._modal.isVisible}">
+        ${this._modal.template}
       </wl-modal>
 
-      <wl-notifications notifications="${_notifications}"></wl-notifications>
+      <wl-notifications .notifications="${this._notifications}"></wl-notifications>
     `;
   }
 

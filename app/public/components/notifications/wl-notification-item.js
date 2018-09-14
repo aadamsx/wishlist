@@ -21,30 +21,56 @@ class WLNotificationItem extends LitElement {
           box-sizing: border-box;
         }
 
+        @keyframes enter {
+          0% {
+            opacity: 0;
+            transform: translateY(200px);
+          }
+
+          70% {
+            opacity: .4;
+          }
+
+          100% {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        @keyframes exit {
+          0% {
+            opacity: 1;
+            transform: translateY(0);
+          }
+
+          30% {
+            opacity: .4;
+          }
+
+          100% {
+            opacity: 0;
+            transform: translateY(200px);
+          }
+        }
+
         div {
           align-items: center;
-          background-color: #e0e0e0;
+          background-color: var(--gray-200);
           border-radius: 4px;
           display: flex;
           height: 48px;
           justify-content: space-between;
           margin-top: 1rem;
-          opacity: 0;
           padding: .5rem;
-          transform: translateY(100px);
           width: 400px;
         }
 
-        .active {
-          opacity: 1;
-          transform: translateY(0);
-          transition: opacity .2s cubic-bezier(.55, .08, .9, .55),
-                      transform .2s ease-out;
+        .enter {
+          animation: enter .2s forwards;
         }
 
-        .removing {
-          transition: opacity .2s cubic-bezier(.13, .77, .42, .94),
-                      transform .2s ease-in;
+        .exit {
+          animation: exit .2s forwards;
         }
 
         button {
@@ -62,31 +88,36 @@ class WLNotificationItem extends LitElement {
 
         button:focus,
         button:hover {
-          background-color: #bdbdbd;
+          background-color: var(--gray-300);
         }
 
         button:active {
-          background-color: #9e9e9e;
+          background-color: var(--gray-400);
         }
 
         .error {
-          background-color: #ffcdd2;
+          background-color: var(--danger-color);
+          color: var(--white);
+        }
+
+        .error button {
+          color: var(--white);
         }
 
         .error button:focus,
         .error button:hover {
-          background-color: #ef9a9a;
+          background-color: var(--danger-color--light);
         }
 
         .error button:active {
-          background-color: #e57373;
+          background-color: var(--danger-color--lighter);
         }
       </style>
     `;
   }
 
   render() {
-    const classes = classNames({
+    const classes = classNames('enter', {
       error: this.isError,
     });
 
@@ -96,16 +127,14 @@ class WLNotificationItem extends LitElement {
       <div class="${classes}">
         ${this.text}
 
-        <button @click="${e => this.removeHandler(e)}">&times;</button>
+        <button @click="${e => this.removeHandler(e)}">
+          <wl-icon icon="close"></wl-icon>
+        </button>
       </div>
     `;
   }
 
   firstUpdated() {
-    setTimeout(() => {
-      this.renderRoot.querySelector('div').classList.add('active');
-    }, 0);
-
     setTimeout(() => this.removeSelf(), 3500);
   }
 
@@ -116,12 +145,18 @@ class WLNotificationItem extends LitElement {
   }
 
   removeSelf() {
-    this.renderRoot.querySelector('div').classList.remove('active');
-    this.renderRoot.querySelector('div').classList.add('removing');
+    const notification = this.renderRoot.querySelector('div');
 
-    setTimeout(() => {
+    const eventListener = () => {
+      notification.removeEventListener('transitionend', eventListener);
+
       store.dispatch(removeNotification(this.key));
-    }, 200);
+    };
+
+    notification.addEventListener('transitionend', eventListener);
+
+    notification.classList.remove('enter');
+    notification.classList.add('exit');
   }
 }
 

@@ -17,7 +17,7 @@ class WLModal extends LitElement {
         }
 
         .backdrop {
-          background-color: #333333;
+          background-color: var(--gray-500);
           bottom: 0;
           left: 0;
           opacity: .5;
@@ -39,8 +39,9 @@ class WLModal extends LitElement {
         }
 
         .modal__body {
-          background-color: #fafafa;
+          background-color: var(--white);
           border-radius: 4px;
+          box-shadow: var(--shadow-3);
           margin-top: -150px;
           padding: 1rem;
         }

@@ -22,8 +22,7 @@ class WLHeader extends connect(store)(LitElement) {
         :host {
           align-items: center;
           background-color: var(--primary-color);
-          box-shadow: 0 0 4px rgba(0,0,0,.14),
-                      0 4px 8px rgba(0,0,0,.28);
+          box-shadow: var(--shadow-2);
           color: var(--primary-text);
           display: flex;
           font-size: 1.5rem;
@@ -42,12 +41,13 @@ class WLHeader extends connect(store)(LitElement) {
         }
 
         #dropdown {
-          background-color: #eeeeee;
+          background-color: var(--white);
           border-radius: 4px;
-          box-shadow: 0px 1px 4px 1px #bdbdbd;
-          color: #212121;
+          box-shadow: var(--shadow-1);
+          color: var(--primary-text--dark);
           font-size: 1rem;
           overflow: hidden;
+          padding: .5rem 0;
           position: absolute;
           right: 5px;
         }
@@ -58,15 +58,15 @@ class WLHeader extends connect(store)(LitElement) {
         }
 
         #dropdown a:hover {
-          background-color: #ffffff;
-          color: #26a69a;
+          background-color: var(--gray-200);
+          color: var(--primary-color--dark);
         }
 
         .caret {
           border-bottom: 6px solid transparent;
           border-left: 6px solid transparent;
           border-right: 6px solid transparent;
-          border-top: 6px solid #fafafa;
+          border-top: 6px solid var(--primary-text);
           display: inline-block;
         }
 

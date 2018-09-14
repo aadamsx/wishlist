@@ -15,55 +15,56 @@ class WLButton extends LitElement {
     return html`
       <style>
         :host {
-          --button__background-color: #eceff1;
-          --button__background-color--hover: #cfd8dc;
-          --button__background-color--active: #b0bec5;
-          --button-primary__background-color: var(--primary-color);
-          --button-primary__background-color--hover: #009688;
-          --button-primary__background-color--active: #00897b;
+          --button__bg-color: #eceff1;
+          --button__bg-color--hover: #cfd8dc;
+          --button__bg-color--active: #b0bec5;
+          --button-primary__bg-color: var(--primary-color);
+          --button-primary__bg-color--hover: var(--primary-color--light);
+          --button-primary__bg-color--active: var(--primary-color--dark);
           --button-primary__color: #fafafa;
 
           display: contents;
         }
 
         button {
-          background-color: var(--button__background-color);
+          background-color: var(--button__bg-color);
           border-radius: calc(1.75rem / 2);
           border: 1px solid #dddddd;
           height: 1.75rem;
           line-height: 1.75rem;
           padding: 0 1rem;
+          transition: all .25s;
         }
 
         button:focus,
         button:hover {
-          background-color: var(--button__background-color--hover);
+          background-color: var(--button__bg-color--hover);
           cursor: pointer;
           outline: none;
         }
 
         button:active {
-          background-color: var(--button__background-color--active);
+          background-color: var(--button__bg-color--active);
         }
 
         .primary {
-          background-color: var(--button-primary__background-color);
-          border-color: var(--button-primary__background-color);
+          background-color: var(--button-primary__bg-color);
+          border-color: var(--button-primary__bg-color);
           color: var(--button-primary__color);
         }
 
         .primary:focus,
         .primary:hover {
-          background-color: var(--button-primary__background-color--hover);
+          background-color: var(--button-primary__bg-color--hover);
         }
 
         .primary:active {
-          background-color: var(--button-primary__background-color--active);
+          background-color: var(--button-primary__bg-color--active);
         }
 
         /* .secondary {
-          background-color: var(--button-primary__background-color);
-          border-color: var(--button-primary__background-color);
+          background-color: var(--button-primary__bg-color);
+          border-color: var(--button-primary__bg-color);
           color: var(--button-primary__color);
         }
 

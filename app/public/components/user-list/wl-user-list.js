@@ -1,5 +1,6 @@
 import '../base/button/wl-button.js';
 import '../base/button/wl-fab.js';
+import '../icon/wl-icon.js';
 import { connect } from 'pwa-helpers/connect-mixin.js';
 import { html, LitElement } from '@polymer/lit-element';
 import { repeat } from 'lit-html/directives/repeat.js';
@@ -29,6 +30,7 @@ class WLUserList extends connect(store)(LitElement) {
 
         wl-fab {
           bottom: 40px;
+          font-size: 2.25rem;
           position: fixed;
           right: 40px;
           transition: transform .15s ease-in-out;
@@ -39,34 +41,41 @@ class WLUserList extends connect(store)(LitElement) {
         }
 
         .container {
-          border-radius: 4px;
-          border: 1px solid #dddddd;
+          background-color: var(--white);
+          border-radius: .25rem;
+          box-shadow: var(--shadow-2);
           margin-bottom: .5rem;
+          overflow: hidden;
         }
 
         .user {
           align-items: center;
+          border-bottom: 1px solid var(--gray-400);
           color: #222222;
           display: flex;
           line-height: 2rem;
-          padding: .5rem;
+          padding: .75rem;
           text-decoration: none;
+          transition: all .25s;
         }
 
         .user:focus,
         .user:hover {
-          background-color: #eceff1;
+          background-color: var(--gray-200);
           outline: none;
         }
 
-        .active {
-          background-color: #b2dfdb;
+        .user.active {
+          border-bottom-color: transparent;
         }
 
+        .active {
+          background-color: var(--primary-color--lighter);
+        }
 
         .active:focus,
         .active:hover {
-          background-color: #b2dfdb;
+          background-color: var(--primary-color--lighter);
           outline: none;
         }
 
@@ -81,7 +90,7 @@ class WLUserList extends connect(store)(LitElement) {
           border-right: 1px solid transparent;
           border-top: 1px solid transparent;
           line-height: 1.75rem;
-          font-size: 14px;
+          font-size: 1rem;
           outline: none;
           width: 100%;
           padding-left: .25rem;
@@ -127,11 +136,9 @@ class WLUserList extends connect(store)(LitElement) {
     return html`
       ${WLUserList.styles}
 
-      <div class="container">
-        <a class="${currentUserClasses}" href="/users/${this.__currentUser}">Myself</a>
-      </div>
-
       <div class="container" @keydown="${e => this.keyDownHandler(e)}">
+        <a class="${currentUserClasses}" href="/users/${this.__currentUser}">Myself</a>
+
         <div class="search" tabindex="-1" @focus="${() => this.renderRoot.getElementById('search').focus()}">
           <input id="search" placeholder="Search..." type="text" @keyup="${e => this.searchHandler(e)}">
         </div>
@@ -142,7 +149,9 @@ class WLUserList extends connect(store)(LitElement) {
       <wl-fab
         class="${isCurrentUserActive ? '' : 'hide'}"
         @click="${() => this.buttonHandler()}"
-      >+</wl-fab>
+      >
+        <wl-icon icon="add"></wl-icon>
+      </wl-fab>
     `;
   }
 

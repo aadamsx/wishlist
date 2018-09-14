@@ -7,9 +7,10 @@ class WLAppLayout extends LitElement {
     return html`
       <style>
         :host {
+          background-color: var(--gray-50);
           display: grid;
-          gap: 1rem;
           grid-template-rows: 56px auto;
+          min-height: 100vh;
         }
       </style>
     `;

@@ -30,7 +30,6 @@ module.exports = {
     }),
 
     new CopyWebpackPlugin([
-      { from: 'node_modules/bootstrap/dist/css/bootstrap-reboot.min.css', to: './', flatten: true },
       { from: 'public/images/*', to: 'images/', flatten: true },
       { from: 'public/manifest.json', to: './', flatten: true },
     ]),

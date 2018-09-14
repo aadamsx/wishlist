@@ -18,10 +18,11 @@ class WLItemList extends connect(store)(LitElement) {
     return html`
       <style>
         :host {
-          display: block;
-          padding: .5rem;
-          border: 1px solid #dddddd;
+          background-color: var(--white);
           border-radius: 4px;
+          display: block;
+          padding: .75rem;
+          box-shadow: var(--shadow-2);
         }
 
         h2 {

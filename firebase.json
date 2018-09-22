@@ -19,11 +19,11 @@
     ],
 
     "predeploy": [
-      "yarn workspace app test",
-      "yarn workspace app build:prod"
+      "yarn run test",
+      "yarn run build:prod"
     ],
 
-    "public": "./app/dist",
+    "public": "./dist",
 
     "rewrites": [
       {

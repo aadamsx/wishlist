@@ -5,7 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: {
-    main: './public/index.js',
+    main: './src/index.js',
   },
 
   output: {
@@ -17,7 +17,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       minify: true,
-      template: './public/index.html',
+      template: './src/index.html',
       firebaseConfig,
     }),
 
@@ -30,8 +30,8 @@ module.exports = {
     }),
 
     new CopyWebpackPlugin([
-      { from: 'public/images/*', to: 'images/', flatten: true },
-      { from: 'public/manifest.json', to: './', flatten: true },
+      { from: 'src/images/*', to: 'images/', flatten: true },
+      { from: 'src/manifest.json', to: './', flatten: true },
     ]),
   ],
 };

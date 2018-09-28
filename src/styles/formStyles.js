@@ -4,8 +4,7 @@ export default html`
   <style>
     form {
       display: grid;
-      gap: 10px;
-      grid-template-columns: 1fr 5fr;
+      grid-template-columns: 1fr;
     }
 
     h1,
@@ -24,6 +23,7 @@ export default html`
       font-size: 1rem;
       height: 1.75rem;
       line-height: 1.75rem;
+      margin-bottom: .75rem;
     }
 
     input {
@@ -32,18 +32,39 @@ export default html`
 
     label {
       align-self: center;
-      justify-self: end;
     }
 
     .actions {
-      grid-column-start: 2;
-      justify-self: end;
+      display: flex;
+      justify-content: space-between;
     }
 
     .required::after {
       color: #d30505;
       content: '*';
       margin-left: 2px;
+    }
+
+    @media screen and (min-width: 768px) {
+      form {
+        gap: 1rem;
+        grid-template-columns: 1fr 5fr;
+      }
+
+      label {
+        justify-self: end;
+      }
+
+      input,
+      select {
+        margin-bottom: 0;
+      }
+
+      .actions {
+        display: block;
+        grid-column-start: 2;
+        justify-self: end;
+      }
     }
   </style>
 `;

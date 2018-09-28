@@ -15,20 +15,20 @@ import HeaderState from './utils/HeaderState.js';
 import store from './store.js';
 
 const homeTpl = html`
-  <wl-double-pane style="padding-top: 1rem">
+  <wl-double-pane>
     <wl-user-list slot="left-pane"></wl-user-list>
     <wl-item-list slot="main-pane"></wl-item-list>
   </wl-double-pane>
 `;
 
 const loginTpl = html`
-  <wl-single-pane style="padding-top: 1rem">
+  <wl-single-pane>
     <wl-login></wl-login>
   </wl-single-pane>
 `;
 
 const signUpTpl = html`
-  <wl-single-pane style="padding-top: 1rem">
+  <wl-single-pane>
     <wl-signup></wl-signup>
   </wl-single-pane>
 `;

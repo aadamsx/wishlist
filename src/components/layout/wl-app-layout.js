@@ -11,6 +11,7 @@ class WLAppLayout extends LitElement {
           display: grid;
           grid-template-rows: 56px auto;
           min-height: 100vh;
+          row-gap: 1rem;
         }
       </style>
     `;

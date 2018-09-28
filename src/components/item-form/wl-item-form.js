@@ -18,13 +18,7 @@ class WLItemForm extends LitElement {
   }
 
   static get styles() {
-    return html`
-      <style>
-        form {
-          width: 500px;
-        }
-      </style>
-    `;
+    return html``;
   }
 
   /* eslint-disable lines-between-class-members */

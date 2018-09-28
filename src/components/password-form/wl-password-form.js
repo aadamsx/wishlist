@@ -12,19 +12,20 @@ class WLPasswordForm extends LitElement {
   static get styles() {
     return html`
       <style>
-        form {
-          grid-template-columns: 2fr 5fr;
-          width: 500px;
+        @media screen and (min-width: 768px) {
+          form {
+            grid-template-columns: 2fr 5fr;
+          }
         }
       </style>
     `;
   }
 
+  /* eslint-disable lines-between-class-members */
   get $confirm() { return this.renderRoot.querySelector('#confirm'); }
-
   get $current() { return this.renderRoot.querySelector('#current'); }
-
   get $new() { return this.renderRoot.querySelector('#new'); }
+  /* eslint-enable */
 
   render() {
     return html`

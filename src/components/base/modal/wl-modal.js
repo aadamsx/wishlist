@@ -12,6 +12,10 @@ class WLModal extends LitElement {
   static get styles() {
     return html`
       <style>
+        * {
+          box-sizing: border-box;
+        }
+
         :host {
           display: block;
         }
@@ -39,11 +43,35 @@ class WLModal extends LitElement {
         }
 
         .modal__body {
+          animation: slideUp .3s cubic-bezier(.36,.82,.56,.99) forwards;
           background-color: var(--white);
           border-radius: 4px;
+          bottom: 0;
           box-shadow: var(--shadow-3);
-          margin-top: -150px;
           padding: 1rem;
+          position: fixed;
+          width: 100%;
+        }
+
+        @media screen and (min-width: 768px) {
+          .modal__body {
+            animation: none;
+            margin-top: -150px;
+            position: static;
+            width: 525px;
+          }
+        }
+
+        @keyframes slideUp {
+          from {
+            opacity: 0;
+            transform: translateY(200px);
+          }
+
+          to {
+            opacity: 1;
+            transform: translateY(0px);
+          }
         }
       </style>
     `;

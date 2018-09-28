@@ -19,24 +19,23 @@ class WLButton extends LitElement {
         }
 
         button {
-          background-color: var(--wl-button__bg-color, #eceff1);
+          background-color: var(--wl-button__bg-color, #cfd8dc);
           border-radius: calc(1.75rem / 2);
-          border-width: 0px;/* solid #dddddd; */
+          border-width: 0px;
           height: 1.75rem;
-          /* line-height: 1.75rem; */
           padding: 0 1rem;
           transition: all .25s;
         }
 
         button:focus,
         button:hover {
-          background-color: var(--wl-button__bg-color--hover, #cfd8dc);
+          background-color: var(--wl-button__bg-color--hover, #b0bec5);
           cursor: pointer;
           outline: none;
         }
 
         button:active {
-          background-color: var(--wl-button__bg-color--active, #b0bec5);
+          background-color: var(--wl-button__bg-color--active, #90a4ae);
         }
 
         .primary {
@@ -53,7 +52,7 @@ class WLButton extends LitElement {
 
         .primary:active {
           background-color: var(--wl-button--primary__bg-color--active, #005cb2);
-          border-color: var(--wl-button--primary__bg-color--hover, #005cb2);
+          border-color: var(--wl-button--primary__bg-color--active, #005cb2);
         }
 
         .secondary {
@@ -65,10 +64,12 @@ class WLButton extends LitElement {
         .secondary:focus,
         .secondary:hover {
           background-color: var(--wl-button--secondary__bg-color--hover, #819ca9);
+          border-color: var(--wl-button--secondary__bg-color--hover, #819ca9);
         }
 
         .secondary:active {
           background-color: var(--wl-button--secondary__bg-color--active, #29434e);
+          border-color: var(--wl-button--secondary__bg-color--active, #29434e);
         }
       </style>
     `;

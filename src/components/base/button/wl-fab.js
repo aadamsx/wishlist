@@ -7,20 +7,15 @@ class WLFab extends LitElement {
     return html`
       <style>
         :host {
-          --button__bg-color: var(--primary-color);
-          --button__bg-color--hover: var(--primary-color--light);
-          --button__bg-color--active: var(--primary-color--dark);
-          --button__color: var(--primary-text);
-
           display: inline-block;
         }
 
         button {
-          background-color: var(--button__bg-color);
+          background-color: var(--wl-fab__bg-color, #1e88e5);
           border-radius: 2rem;
           border: none;
           box-shadow: var(--shadow-2);
-          color: var(--button__color);
+          color: var(--wl-fab__color, #fafafa);
           font-size: 2.5rem;
           height: 4rem;
           transition: all .25s;
@@ -29,14 +24,14 @@ class WLFab extends LitElement {
 
         button:focus,
         button:hover {
-          background-color: var(--button__bg-color--hover);
+          background-color: var(--wl-fab__bg-color--hover, #1976d2);
           box-shadow: var(--shadow-3);
           cursor: pointer;
           outline: none;
         }
 
         button:active {
-          background-color: var(--button__bg-color--active);
+          background-color: var(--wl-fab__bg-color--active, #005cb2);
         }
       </style>
     `;

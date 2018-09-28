@@ -136,9 +136,11 @@ class WLUserList extends connect(store)(LitElement) {
     return html`
       ${WLUserList.styles}
 
-      <div class="container" @keydown="${e => this.keyDownHandler(e)}">
+      <div class="container">
         <a class="${currentUserClasses}" href="/users/${this.__currentUser}">Myself</a>
+      </div>
 
+      <div class="container" @keydown="${e => this.keyDownHandler(e)}">
         <div class="search" tabindex="-1" @focus="${() => this.renderRoot.getElementById('search').focus()}">
           <input id="search" placeholder="Search..." type="text" @keyup="${e => this.searchHandler(e)}">
         </div>

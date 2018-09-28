@@ -40,12 +40,21 @@ class WLMainApp extends connect(store)(LitElement) {
           --primary-color--light: #4fc3f7;
           --primary-color--lighter: #81d4fa;
           --primary-color--dark: #039be5;
+          --primary-color--darker: #0288d1;
           --primary-text: #fafafa;
           --primary-text--dark: #212121;
 
           --danger-color: #ef5350;
           --danger-color--light: #e57373;
           --danger-color--lighter: #ef9a9a;
+
+          --wl-button--primary__bg-color: var(--primary-color);
+          --wl-button--primary__bg-color--hover: var(--primary-color--dark);
+          --wl-button--primary__bg-color--active: var(--primary-color--darker);
+
+          --wl-fab__bg-color: var(--primary-color);
+          --wl-fab__bg-color--hover: var(--primary-color--dark);
+          --wl-fab__bg-color--active: var(--primary-color--darker);
 
           --shadow-1: 0 2px 2px 0    rgba(0, 0, 0, 0.14),
                       0 3px 1px -2px rgba(0, 0, 0, 0.12),
